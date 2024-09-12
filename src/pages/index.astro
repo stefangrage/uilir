@@ -10,6 +10,7 @@ import kodakelektralitefarver from "../assets/images/kodak-elektralite-farver.jp
 import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 ---
 <MainLayout title="Titel">
+	<!-- Intro/Indholdsfortegnelse mm. -->
 	<section class="prose pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Intro</h2>
 	<p>En masse små kodestumper med interaktioner og animationer klar til at blive copy-pastet og tilpasset.</p>
@@ -26,6 +27,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	</ul>
 	</section>
 
+	<!-- Lydeffekter -->
 	<section id="lydeffekter" class="prose pt-1" x-data>
 	<h2 class="text-6xl font-extrabold font-black cursor cursor-handcursor" @mouseenter="$refs.wauwlyd.play()">Lydeffekter</h2>
 	<audio x-ref="wauwlyd">
@@ -85,6 +87,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>Hvis du vil afspille en lyd ved hover i stedet for click, kan du bruge @mouseenter eller @mouseleave i stedet for @click. Besynderligt nok kræver @moseenter at nogen har klikket et vilkårligt sted på siden for at fungere...!?</p>
 	</section>
 
+	<!-- Custom cursor -->
 	<section id="customcursor" class="prose pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Custom Cursor</h2>
 	<p>Det er nemt og sjovt at tilføje sine egne cursors.</p>
@@ -131,6 +134,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>Dernæst defineres de elementer (a og button), som cursoren skal være aktiv ved – du kan tilføje alle de elementer du vil. @apply tilføjer Tailwind-classes til de valgte elementer, i dette tilfælde den nye custom cursor class.</p>
 	</section>
 
+	<!-- Første Motion One stump -->
 	<section class="prose pt-1" id="foerstemotiononestump">
 	<h2 class="text-6xl font-extrabold font-black">I gang med Motion One</h2>
 	<p>For at bruge Motion One, skal du i bunden af din side/template/komponent importere Motion One biblioteket i et script tag:</p>
@@ -159,10 +163,9 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	</footer>
 	`} lang="astro"> 
 	</Code>
-
-
 	</section>
 
+	<!-- Entrance animation -->
 	<section class="prose pt-1" id="entranceanimation">
 	<h2 class="text-6xl font-extrabold font-black">Entrance animation</h2>
 	<p>Lad os starte med noget simpelt - at tilføje en entrance animation, der får hele websitet til at fade ind, når det loades - prøv at reloade siden for at se animationen.</p>
@@ -179,6 +182,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	</ul>
 	</section>
 
+	<!-- Mere animate -->
 	<section class="prose pt-1" id="mereanimate">
 	<h2 class="text-6xl font-extrabold font-black origin-top-left mereanimate">Mere animate()</h2>
 	<p>Prøv at gøre animate() funktionen lidt mere kompleks, som eksempelvis i overskriften herover. Her er der flere parametre i keyframe animationen: Opacity, scale, rotate, x, y, delay, duration, direction mm.</p>
@@ -202,6 +206,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	</Code>
 	</section>	
 
+	<!-- inView -->
 	<section class="prose pt-1" id="inview">
 	<h2 class="text-6xl font-extrabold font-black">inView animation</h2>
 	<p>Indtil videre er animationerne bare blevet eksekveret når sitet er loadet. Men rigtig ofte vil vi gerne eksekvere animationerne, når brugeren ser det pågældende element i viewporten. Det kan vi gøre ved hjælp af inview()-funktionen. Fotoet herunder skubbes ind fra siden, når brugeren scroller ned til det</p>
@@ -222,22 +227,59 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>I de følgende eksempler bruges inView til at "omkranse" mange af animationerne. Animationerne behøver ikke nødvendigvis først at starte "inView," men vil i mange tilfælde være det. Derfor er "inView" inkluderet i eksemplerne.</p>
 	</section>
 
+	<!-- Stagger animation -->
+	<section class="prose pt-1" id="stagger">
+	<h2 class="text-6xl font-extrabold font-black">Stagger animation</h2>
+	<p>Stagger funktionen giver en række elementer den samme animation, men med et delay mellem hvert element. Se f.eks. listen nedenfor (reload evt. for at se animationen):</p>
+	<ul class="staggeranimation text-2xl">
+		<li>Stagger</li>
+		<li>Stagger senere</li>
+		<li>Stagger endnu senere</li>
+		<li>Stagger meget senere</li>
+		<li>Stagger sidst</li>
+	</ul>	
+	<p>Stagger animationer kan laves med følgende kodestump:</p>
+	<Code code={`
+	/* Stagger animation */
+	inView( "#stagger" , () =>{
+		animate(
+		".staggeranimation li",
+		{ opacity: [0, 1] },
+		{ 
+			delay: stagger(1, { start: 2 })
+		}
+		)
+	})
+	`} lang="js"> 
+	</Code>
+	<ul>
+		<li>Først vælges alle de elementer, der skal "staggeres" - jeg har valgt alle list items nede i en ul med class'en staggeranimation. Men du kan lave selectoren som du ønsker.</li>
+		<li>Dernæst definerer jeg keyframe-indstillingerne for stagger animationen</li>
+		<li>Til sidst anvender jeg keyframe animationen med et delay, som tilføjer "stagger" på alle elementer. </li>
+		<li>I kodestumpen stagger(1, &#123; start: 2 &#125; refererer 1-tallet til et delay i antal sekunder mellem hvert list item.</li>
+		<li>start: 2 refererer til hvor lang tid der skal gå, før det første list item animeres ind.</li>
+	</ul>
+	<p>I ovenstående eksempel har jeg brugt en unordered list og stagget alle list items. Men du kan sagtens bruge den på andre elementer - f.eks. billeder i en section. Og du kan også lave din keyframe animation vildere:-) Og du behøver ikke nødvendigvis at pakke stagger animationen ind i inView-funktionen.</p>
+	</section>
+
+	<!-- Crossfade -->
 	<section class="prose pt-1" id="crossfade">
 	<h2 class="text-6xl font-extrabold font-black">Crossfade mellem to billeder</h2>
 	<p>Lad os se på hvordan man kan crossfade mellem to billeder, eksempelvis:</p>
 	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
 		<Image src={kodakelektralitefarver} alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0" />
-		<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen  absolute top-0 z-0 my-0" />	
+		<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen absolute top-0 z-0 my-0" />	
 	</section>
 	<p>(Astro) HTML'en:</p>
 	<Code code={`
-	<section class="crossfadeimages mx-auto relative h-screen w-screen">
-	<Image src={kodakelektralitefarver} alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0" />
-	<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen  absolute top-0 z-0 my-0" />	
+	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
+		<img src="kodakelektralitefarver.webp" alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0">
+		<img src="kodakelektralitesh.webp" alt="" class="crossfadebottomimg object-cover h-screen absolute top-0 z-0 my-0">
 	</section>
 	`} lang="astro">
 	</Code>
-	<p>HTML'en består af to billeder, der ligger præcis samme sted ved hjælp af absolute/relative positionering. Parent elementet er positioneret "relative," så child elementerne (billeder) positioneres absolut i forhold til det relative element.</p>
+	<p>HTML'en består af to billeder, der ligger præcis samme sted ved hjælp af absolute/relative positionering.  Parent elementet er positioneret "relative," så child elementerne (billeder) positioneres absolut i forhold til det relative element.</p>
+	<p>I eksemplet bruges et img elementet med billeder i public-mappen, men du kan med fordel bruge Astros Image component i stedet - Image componenten driller når man skal lave kode-dokumentation, derfor har jeg brugt et img-element.</p>
 	<p>Script-stumpen:</p>
 	<Code code={`
 	/* Crossfade to billeder */
@@ -254,6 +296,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>Script stumpen bruger Motion One scroll-funktionen til at checke hvor langt ned i elementet med "crossfadeimages" classen (den relative container), brugeren er scrollet. Animate-funktionen bruges til at ændre opacity fra 1 til 0 på det nederste billede. Offset bruges til at styre hvornår crossfadet skal starte/være færdiggjort. I dette tilfælde starter opacity-animationen 25vh FØR det relative element kommer ind på skærmen.</p>
 	</section>
 
+	<!-- Progress bar -->
 	<section id="progressbar" class="prose pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Progress-bar</h2>
 	<p>Læg mærke til toppen af sitet - der er en progress-bar/læseindikator, der viser hvor langt nede på siden brugeren er. Du kan lave en progress-bar ved hjælp af to stumper: En html-og-tailwind stump, der styrer udseendet, og en JS/Motion One stump, der styrer hvor meget af progress-baren, der vises.</p>
@@ -305,6 +348,17 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	{ opacity: [ 0.4, 1, 0, 0.8], scale: [0.95, 1, 0.7, 0.9], rotate: [0, 180, 270, 360], x: [0, 50, 0, -50 ], y:[0, 50, 0, -50 ]}, 
 	{ delay: 2, duration: 4, direction: "alternate", repeat: Infinity }
 	)
+
+	/* Stagger animation */
+	inView( "#stagger" , () =>{
+		animate(
+		".staggeranimation li",
+		{ opacity: [0, 1] },
+		{ 
+			delay: stagger(1, { start: 2 })
+		}
+		)
+	})
 
 	/* Crossfade to billeder */
 	scroll(
