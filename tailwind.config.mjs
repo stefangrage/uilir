@@ -2,7 +2,12 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {},
+		extend: {
+            cursor: {
+                // 'sjaeldencursor': 'url(cursor.svg) 25 25, pointer'
+                'handcursor': 'url(cursor.svg) 25 25, pointer',
+            }
+        },
 	},
 	plugins: [
         require('@tailwindcss/typography'),

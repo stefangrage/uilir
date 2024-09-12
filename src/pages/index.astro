@@ -2,11 +2,320 @@
 import MainLayout from "../layouts/MainLayout.astro";
 import Button from '../components/Button.astro';
 import Link from '../components/Link.astro';
+import { Code } from "astro:components";
+import { Image } from "astro:assets";
+import radio from "../assets/images/radio.jpg"
+import kodakelektralitesh from "../assets/images/kodak-elektralite-sh.jpg";
+import kodakelektralitefarver from "../assets/images/kodak-elektralite-farver.jpg";
+import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 ---
 <MainLayout title="Titel">
-	<article>
-		<h1>Index overskrift</h1>
-		<Button>Klik!</Button>
-		<p>Link til <Link href="https://www.kea.dk" target="_blank">En anden side</Link></p>
-	</article>
+	<section class="prose pt-1">
+	<h2 class="text-6xl font-extrabold font-black">Intro</h2>
+	<p>En masse små kodestumper med interaktioner og animationer klar til at blive copy-pastet og tilpasset.</p>
+	<p>Kodestumperne forudsætter at du bruger starteren <Link href="https://github.com/stefangrage/did-e24-starter.git" target="_blank">DiDe starter templaten</Link> med Astro, Tailwind, Alpine, Motion One mm..</p>
+	<h3 class="">Indholdsfortegnelse</h3>
+	<ul>
+		<li><Link href="#lydeffekter" alt="">Lydeffekter</Link></li>
+		<li><Link href="#customcursor" alt="">Custom cursor</Link></li>
+		<li><Link href="#foerstemotiononestump" alt="">I gang med Motion One</Link></li>	
+		<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
+		<li><Link href="#inview" alt="">inView</Link></li>		
+		<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
+		<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
+	</ul>
+	</section>
+
+	<section id="lydeffekter" class="prose pt-1" x-data>
+	<h2 class="text-6xl font-extrabold font-black cursor cursor-handcursor" @mouseenter="$refs.wauwlyd.play()">Lydeffekter</h2>
+	<audio x-ref="wauwlyd">
+		<source src="wauw.mp3" type="audio/mpeg">
+	</audio>
+	<p>Det er ret nemt at lave lydeffekter på et website, specielt når alpine.js kan bruges til det.</p>
+	<h3 class="">Find et par gode lydeffekter</h3>
+	<p>Du kan finde lydeffekter flere steder, f.eks.:</p>
+	<ul>
+		<li><Link href="https://mixkit.co/free-sound-effects/" target="_blank">https://mixkit.co/free-sound-effects/</Link></li>
+		<li><Link href="https://www.tunepocket.com/user-interface-ui-sounds/" target="_blank">https://www.tunepocket.com/user-interface-ui-sounds/</Link></li>
+		<li><Link href="https://www.freesoundslibrary.com/game-and-interface-sounds/" target="_blank">https://www.freesoundslibrary.com/game-and-interface-sounds/</Link></li>
+	</ul>
+	<p>Filerne ligger i forskellige formater – sørg for at konvertere til mp3. Det kan du gøre ved hjælp af Adobe Media Encoder eller online på f.eks. <Link href="https://cloudconvert.com/" target="_blank">https://cloudconvert.com/</Link></p>
+	<p>Upload din lydfil til public-mappen i dit Astro-site.</p>
+	<h3 class="">Definer "scopet"</h3>
+	<p>Tilføj en x-data attribut for at definere “scopet” for lyden - du kan typisk bruge en section eller en component til at definere scopet for lyden. I dette eksempel, har jeg sat scopet til at være denne section:</p>
+	<Code code={`
+	<section id="lydeffekter" class="prose" x-data>
+	`} lang="html">
+	</Code>
+	<h3 class="">Tilføj html audio element</h3>
+	<p>Tilføj et audio element til html’en <Link href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio" target="_blank">https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio</Link></p>
+	<audio x-ref="trykforatafspillelyd">
+		<source src="applaus.mp3" type="audio/mpeg">
+	</audio>
+	<Code code={`
+	<audio x-ref="trykforatafspillelyd">
+		<source src="applaus.mp3" type="audio/mpeg">
+	</audio>
+	`} lang="html">
+	</Code>
+	<ul>
+		<li>x-ref er alpine.js, og fungerer som en reference til audio-elementet. Det svarer til noget lignende:<br>
+			const trykpaafotoet = document.queryselector… i traditionel javascript.
+		</li>
+	</ul>
+	<h3 class="">Afspil lyden</h3>
+	<p>For at afspille lyden bruges igen en lille stump alpine. I eksemplet afspilles lyden, når der klikkes på et foto:</p>
+	<Image src={radio} alt="" type="image/webp" loading="lazy" 
+	class="cursor cursor-handcursor"
+	@click="$refs.trykforatafspillelyd.play()"></Image>
+	<p>Kodestumpen består af lidt html med en alpine @click attribut:</p>
+	<Code code={`
+	<Image src={radio} alt="" type="image/webp" loading="lazy" 
+	class="cursor cursor-handcursor"
+	@click="$refs.trykforatafspillelyd.play()"></Image>
+	`} lang="html">
+	</Code>
+	<ul>
+		<li>@click er en event listener, der lytter om hvorvidt der bliver klikket på img-elementet.</li>
+		<li>$refs.trykforatafspillelyd er en reference tilbage lydfilen, der blev inkluderet i lydafspilleren tidligere.</li>
+		<li>play() er en javascript-stump, der afspiller lyden.</li>
+	</ul>
+	<h3 class="">Tilføj flere lyde</h3>
+	<p>Gennemløb ovenstående for hver lyd, du vil tilføje.</p>
+	<p>Hvis du vil afspille en lyd ved hover i stedet for click, kan du bruge @mouseenter eller @mouseleave i stedet for @click. Besynderligt nok kræver @moseenter at nogen har klikket et vilkårligt sted på siden for at fungere...!?</p>
+	</section>
+
+	<section id="customcursor" class="prose pt-1">
+	<h2 class="text-6xl font-extrabold font-black">Custom Cursor</h2>
+	<p>Det er nemt og sjovt at tilføje sine egne cursors.</p>
+	<h3 class="">Lav grafikken</h3>
+	<p>Først og fremmest gælder det om at få fat på en (lille) grafik-fil (max. 256 x 256 pixels). Se sektionen "usage notes" på <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#usage_notes" target="_blank">https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#usage_notes</Link> vedr. filstørrelser og typer.</p>
+	<p>Så: lav/design en lille cursor-fil, og placer den i “public” mappen i dit Astro website.</p>
+	<h3 class="">Implementer i Tailwind</h3>
+	<p>Jvf. <Link href="https://tailwindcss.com/docs/cursor#using-custom-values" target="_blank">https://tailwindcss.com/docs/cursor#using-custom-values</Link> kan cursors tilpasses i tailwind.</p>
+	<p>Det kan gøres i tailwind.config.js filen, hvor man kan "extende" tailwind med diverse nye regler – se mit eksemplet nedenfor, der tilføjer en ny cursor-class til Tailwind.</p>
+	<Code code={`
+	theme: {
+		extend: {
+            cursor: {
+            'handcursor': 'url(cursor.svg) 25 25, pointer',
+        	}
+        },
+	},
+	`} lang="js">
+	</Code>
+	<p>Sørg for at følge samme syntaks, så der står "theme, extend, cursor..." og tuborg-klammer i samme rækkefølge. Det fortæller tailwind at du vil konfigurere din cursor, så du senere kan bruge den.</p>
+	<p>Giv din cursor et navn (I eksemplet er cursoren navngivet 'handcursor').</p>
+	<p>Lav den css der skal til: en url() med stien til dit cursor-billede og afslut med “, pointer” (det er et obligatorisk fallback). I mit eksempel står der også 25 25, som er et par værdier, der justerer placeringen af din cursor. Se <Link href="https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#syntax" target="_blank">https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#syntax</Link> for yderligere info.</p>
+	<p>Brug din nye cursor ved at tilføje classerne "cursor cursor-handcursor" til de html-elementer, der skal have din custom cursor på hover, jvf. eksemplet nedenfor, der tilføjer cursoren til Link komponenten.</p>
+	<Code code={`
+	---
+	// Henter parametrene fra Astro.props
+	const { href="#", target="_self"} = Astro.props; 
+	---
+	<a href={href} class="underline cursor cursor-handcursor" target={target}><slot /></a>
+	`} lang="astro">
+	</Code>
+	<h3 class="">Custom cursor på mange elementer</h3>
+	<p>Hvis cursoren skal bruges på mange elementer, f.eks. alle links og knapper, er det nemmere at tilføje den nye cursor-class til tailwind.css filen.</p>
+	<p>Det kan gøres jvf. eksemplet nedenfor.</p>
+	<Code code={`
+	@layer base{
+		a, button{
+			@apply cursor-handcursor;
+		}
+	}		
+	`} lang="css">
+	</Code>
+	<p>@layer base betyder at vi “bygger videre” på Tailwind, og er en konvention for det med at arbejde med Tailwind.</p>
+	<p>Dernæst defineres de elementer (a og button), som cursoren skal være aktiv ved – du kan tilføje alle de elementer du vil. @apply tilføjer Tailwind-classes til de valgte elementer, i dette tilfælde den nye custom cursor class.</p>
+	</section>
+
+	<section class="prose pt-1" id="foerstemotiononestump">
+	<h2 class="text-6xl font-extrabold font-black">I gang med Motion One</h2>
+	<p>For at bruge Motion One, skal du i bunden af din side/template/komponent importere Motion One biblioteket i et script tag:</p>
+	<Code code={`
+	<script>
+	/* Import af Motion One biblioteket */
+	import { animate, stagger, inView, scroll, timeline } from "motion";
+	</script>
+	`} lang="js"> 
+	</Code>
+	<p>Så er Motion One installeret og klar til at blive brugt:-)</p>
+	<p>OBS! En del af animationerne kan komme til at gøre viewporten for bred, så der kommer horisontale scrollbars. Så det kan blive nødvendigt at sætte "overflow-hidden" på dele af sitet. På det her site, er der tilføjet en div med class overflow-hidden rundt om main-elementet i MainLayout.astro. Det gør at elementer kan blive bredere end main-sektionen, f.eks. når de skal animere ind, men sitet bliver ikke bredere end viewporten:</p>
+	<Code code={`
+	<header class="bg-pink-200">
+		<Header></Header>
+	</header>
+	
+	<div class="overflow-hidden">
+		<main class="container mx-auto p-8 prose prose-xl max-w-4xl">
+			<slot />
+		</main>
+	</div>
+
+	<footer class="bg-gradient-to-r to-pink-500 from-yellow-300">
+		<Footer></Footer>
+	</footer>
+	`} lang="astro"> 
+	</Code>
+
+
+	</section>
+
+	<section class="prose pt-1" id="entranceanimation">
+	<h2 class="text-6xl font-extrabold font-black">Entrance animation</h2>
+	<p>Lad os starte med noget simpelt - at tilføje en entrance animation, der får hele websitet til at fade ind, når det loades - prøv at reloade siden for at se animationen.</p>
+	<p>Sådan en animation kan tilføjes i dit script-tag med ganske få kodestumper, lige efter det import statementet, der blev tilføjet i afsnittet "I gang med Motion One":</p>
+	<Code code={`
+	animate( "body", { opacity: [ 0, 1] }, { duration: 5 })
+	`} lang="js"> 
+	</Code>
+	<ul>
+		<li>animate() bruger Motion Ones animate funktion</li>
+		<li>"body" er selectoren - den siger at det er vores body, der skal animeres. Den fungerer på samme måde som en CSS-selector.</li>
+		<li>I Første tuborg-klamme defineres keyframene i animationen: &#123; opacity: [ 0, 1]  &#125;</li>
+		<li>I andet sæt tuborg-klammer defineres indstillingerne for keyframe-animationen: &#123; duration: 5 &#125;</li>
+	</ul>
+	</section>
+
+	<section class="prose pt-1" id="mereanimate">
+	<h2 class="text-6xl font-extrabold font-black origin-top-left mereanimate">Mere animate()</h2>
+	<p>Prøv at gøre animate() funktionen lidt mere kompleks, som eksempelvis i overskriften herover. Her er der flere parametre i keyframe animationen: Opacity, scale, rotate, x, y, delay, duration, direction mm.</p>
+	<Code code={`
+	/* Mere animate() */
+	animate(".mereanimate", 
+	{ opacity: [ 0.4, 1, 0, 0.8], scale: [0.95, 1, 0.7, 0.9], rotate: [0, 180, 270, 360], x: [0, 50, 0, -50 ], y:[0, 50, 0, -50 ]}, 
+	{ delay: 2, duration: 4, direction: "alternate", repeat: Infinity }
+	)
+	`} lang="js"> 
+	</Code>
+	<ul>
+		<li>Det første sæt tuborg-klammer med "opacity, scale, rotate, x og y" definerer de transforms, der udføres, og de 4 keyframes, der er i denne animation. Her kan du tilføje alle de CSS transforms, du vil.</li>
+		<li>Det andet sæt tuborg-klammer med "delay, duration, direction mm.," definerer dine parametre for animationenm, altså det der svarer til CSS Animation egenskaben. </li>
+		<li>Læg mærke til at jeg har tilføjet et "delay" (i sekunder) - prøv at reloade siden, hvis du ikke kan se det i første omgang. Delayet måles fra når siden er loadet. </li>
+	</ul>
+	<p>NB: Jeg har tilføjet en tailwind class til overskriften: origin-top-left. Det placerer orienteringspunktet for animationen øverst til venstre på elementet:</p>
+	<Code code={`
+	<h2 class="text-6xl font-extrabold font-black origin-top-left mereanimate ">Mere animate()</h2>
+	`} lang="astro"> 
+	</Code>
+	</section>	
+
+	<section class="prose pt-1" id="inview">
+	<h2 class="text-6xl font-extrabold font-black">inView animation</h2>
+	<p>Indtil videre er animationerne bare blevet eksekveret når sitet er loadet. Men rigtig ofte vil vi gerne eksekvere animationerne, når brugeren ser det pågældende element i viewporten. Det kan vi gøre ved hjælp af inview()-funktionen. Fotoet herunder skubbes ind fra siden, når brugeren scroller ned til det</p>
+	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="fotoinview"></Image>
+	<p>inView()-funktionen ser således ud for dette eksempel:</p>
+	<Code code={`
+	/* inView animation */
+	inView( ".fotoinview" , () =>{
+	animate( ".fotoinview", { x: [-2000, 0 ] }, { duration: 3 })
+	})
+	`} lang="js"> 
+	</Code>
+	<ul>
+		<li>inView-funktionen tager først et element - i mit tilfælde et Image component med class'en "fotoinview"</li>
+		<li>Dernæst ser paranteserne og pilen lidt kryptiske ud - de definerer en callback funktion - det der skal ske når elementetet er "inview."</li>
+		<li>Callback funktionen består af en animate()-funktion, helt som anvendt i de sidste par eksempler. Den animerer blot på x-positionen i stedet for opacity og scale.</li>
+	</ul>
+	<p>I de følgende eksempler bruges inView til at "omkranse" mange af animationerne. Animationerne behøver ikke nødvendigvis først at starte "inView," men vil i mange tilfælde være det. Derfor er "inView" inkluderet i eksemplerne.</p>
+	</section>
+
+	<section class="prose pt-1" id="crossfade">
+	<h2 class="text-6xl font-extrabold font-black">Crossfade mellem to billeder</h2>
+	<p>Lad os se på hvordan man kan crossfade mellem to billeder, eksempelvis:</p>
+	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
+		<Image src={kodakelektralitefarver} alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0" />
+		<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen  absolute top-0 z-0 my-0" />	
+	</section>
+	<p>(Astro) HTML'en:</p>
+	<Code code={`
+	<section class="crossfadeimages mx-auto relative h-screen w-screen">
+	<Image src={kodakelektralitefarver} alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0" />
+	<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen  absolute top-0 z-0 my-0" />	
+	</section>
+	`} lang="astro">
+	</Code>
+	<p>HTML'en består af to billeder, der ligger præcis samme sted ved hjælp af absolute/relative positionering. Parent elementet er positioneret "relative," så child elementerne (billeder) positioneres absolut i forhold til det relative element.</p>
+	<p>Script-stumpen:</p>
+	<Code code={`
+	/* Crossfade to billeder */
+	scroll(
+	animate(".crossfadebottomimg", {
+		opacity: [1, 0]
+	}), {
+		target: document.querySelector(".crossfadeimages"),
+		offset: ["-25vh", "25vh"]
+	}
+	);
+	`} lang="js">
+	</Code>
+	<p>Script stumpen bruger Motion One scroll-funktionen til at checke hvor langt ned i elementet med "crossfadeimages" classen (den relative container), brugeren er scrollet. Animate-funktionen bruges til at ændre opacity fra 1 til 0 på det nederste billede. Offset bruges til at styre hvornår crossfadet skal starte/være færdiggjort. I dette tilfælde starter opacity-animationen 25vh FØR det relative element kommer ind på skærmen.</p>
+	</section>
+
+	<section id="progressbar" class="prose pt-1">
+	<h2 class="text-6xl font-extrabold font-black">Progress-bar</h2>
+	<p>Læg mærke til toppen af sitet - der er en progress-bar/læseindikator, der viser hvor langt nede på siden brugeren er. Du kan lave en progress-bar ved hjælp af to stumper: En html-og-tailwind stump, der styrer udseendet, og en JS/Motion One stump, der styrer hvor meget af progress-baren, der vises.</p>
+	<p>Først og fremmest er progress-baren "designet" med Tailwind. Jeg har placeret den nederst i html'en, da den alligevel bare bliver positioneret "fixed" over alt andet indhold:</p>
+	<Code code={`
+	<!-- Progress-bar placeret i toppen af sitet -->
+	<div class="progress-bar h-4 fixed w-full bg-gradient-to-r from-pink-500 to-yellow-300 left-0 origin-top-left top-0 right-0"></div>
+	`} lang="html">
+	</Code>
+	<p>Dernæst er der en JS/Motion One stump, der bruger Motion Ones scroll-funktion: </p>
+	<Code code={`
+	/*Progress-baren/læseindikatoren */
+	scroll( animate(".progress-bar", { scaleX: [0, 1] }));
+	`} lang="js">
+	</Code>
+	<p>Her udfører scroll-funktionen en animate-funktion, der skalerer progress-baren op i størrelse fra 0 til 1 (fuld størrelse), alt afhængig af hvor langt brugeren er scrollet ned på siden.</p>
+	<p>En progress-bar behøver ikke at være fastgjort til toppen - den kan f.eks. også være i venstre eller højre side af skærmen - så skal html'en og JS/Motion One stumpen tilpasses lidt:</p>
+	<Code code={`
+	<!-- Progress-bar placeret i venstre side af sitet -->
+	<div class="progress-bar h-4 fixed h-full bg-gradient-to-b from-pink-500 to-yellow-300 left-0 origin-top-left top-0 right-[99%]"></div>
+	`} lang="html">
+	</Code>
+	<p>Og JS'en:</p> 
+	<Code code={`
+	/*Progress-baren/læseindikatoren */
+	scroll( animate(".progress-bar", { scaleY: [0, 1] }));
+	`} lang="js">
+	</Code>
+	</section>
+
+	<!-- Progress-baren på det her site -->
+	<div class="progress-bar h-4 fixed w-full bg-gradient-to-r from-pink-500 to-yellow-300 left-0 origin-top-left top-0 right-0"></div>
 </MainLayout>
+
+<script>
+	/* Import af Motion One bibliotek */
+	import { animate, stagger, inView, scroll, timeline } from "motion";
+
+	/* Entrance animation */
+	animate( "body", { opacity: [ 0, 1] }, { duration: 5 });
+
+	/* inView animation */
+	inView( ".fotoinview" , () =>{
+	animate( ".fotoinview", { x: [-2000, 0 ] }, { duration: 3 })
+	})
+
+	/* Mere animate() */
+	animate(".mereanimate", 
+	{ opacity: [ 0.4, 1, 0, 0.8], scale: [0.95, 1, 0.7, 0.9], rotate: [0, 180, 270, 360], x: [0, 50, 0, -50 ], y:[0, 50, 0, -50 ]}, 
+	{ delay: 2, duration: 4, direction: "alternate", repeat: Infinity }
+	)
+
+	/* Crossfade to billeder */
+	scroll(
+		animate(".crossfadebottomimg", {
+			opacity: [1, 0]
+		}), {
+			target: document.querySelector(".crossfadeimages"),
+			offset: ["-25vh", "25vh"]
+		}
+	);
+
+	/* Progress-baren/læseindikatoren */
+	scroll( animate(".progress-bar", { scaleX: [0, 1] }));
+</script>
