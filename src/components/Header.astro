@@ -1,6 +1,65 @@
 ---
+
 ---
+
+<!-- Rolling banner -->
 <div class="container max-w-4xl mx-auto px-8 py-16 prose">
     <h1 class="text-4xl lg:text-9xl mb-8">UI lir</h1>
     <p class="text-2xl">Mikrointeraktioner og animationer til dit UI</p>
 </div>
+<!-- Ifinite rolling text banner aka. Marquee banner - inspireret af https://jackwhiting.co.uk/posts/creating-a-marquee-with-tailwind/ -->
+<div class="relative flex overflow-x-hidden bg-pink-800 text-white">
+    <div class="py-4 animate-infinite-scroll whitespace-nowrap [&_span]:mx-6">
+      <span>UI Lir</span>
+      <span>Fede effekter</span>
+      <span>Flotte animationer</span>
+      <span>Høje lyde</span>
+      <span>Livlige og levende webløsninger</span>
+      <span>UI & UX</span>
+      <span>Interaktioner</span>
+      <span>Mikroanimationer</span>
+      <span>Mega fedt!</span>
+      <span>Dit site bliver bedre!</span>
+    </div>
+    <div class="absolute top-0 py-4 animate-infinite-scroll2 whitespace-nowrap [&_span]:mx-6" aria-hidden="true">
+        <span>UI Lir</span>
+        <span>Fede effekter</span>
+        <span>Flotte animationer</span>
+        <span>Høje lyde</span>
+        <span>Livlige og levende webløsninger</span>
+        <span>UI & UX</span>
+        <span>Interaktioner</span>
+        <span>Mikroanimationer</span>
+        <span>Mega fedt!</span>
+        <span>Dit site bliver bedre!</span>
+    </div>
+  </div>
+<!--   
+<div class="w-full overflow-hidden">
+    <div class="flex w-[200%] bg-pink-800 text-white py-4 overflow-hidden">
+        <ul class="flex flex-row flex-nowrap items-center justify-center animate-infinite-scroll mx-0 px-0 [&_li]:mx-6">
+            <li>UI Lir</li>
+            <li>Fede effekter</li>
+            <li>Flotte animationer</li>
+            <li>Høje lyde</li>
+            <li>Livlige og levende webløsninger:-)</li>
+            <li>UI & UX</li>
+            <li>Interaktioner</li>
+            <li>Mikroanimationer</li>
+            <li>Mega fedt!</li>
+            <li>Dit site bliver bedre!</li>
+        </ul>
+        <ul class="flex flex-row flex-nowrap items-center justify-center animate-infinite-scroll mx-0 px-0 [&_li]:mx-6" aria-hidden="true">
+            <li>UI Lir</li>
+            <li>Fede effekter</li>
+            <li>Flotte animationer</li>
+            <li>Høje lyde</li>
+            <li>Livlige og levende webløsninger:-)</li>
+            <li>UI & UX</li>
+            <li>Interaktioner</li>
+            <li>Mikroanimationer</li>
+            <li>Mega fedt!</li>
+            <li>Dit site bliver bedre!</li>
+        </ul>
+    </div>
+</div> -->

@@ -22,7 +22,9 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 		<li><Link href="#foerstemotiononestump" alt="">I gang med Motion One</Link></li>	
 		<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
 		<li><Link href="#inview" alt="">inView</Link></li>	
-		<li><Link href="#stagger" alt="">Stagger</Link></li>		
+		<li><Link href="#stagger" alt="">Stagger</Link></li>
+		<li><Link href="#timelineanimation" alt="">Timeline animation</Link></li>	
+		<li><Link href="#inviewandreturn" alt="">inView & return animation</Link></li>		
 		<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
 		<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
 	</ul>
@@ -172,14 +174,14 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>Lad os starte med noget simpelt - at tilføje en entrance animation, der får hele websitet til at fade ind, når det loades - prøv at reloade siden for at se animationen.</p>
 	<p>Sådan en animation kan tilføjes i dit script-tag med ganske få kodestumper, lige efter det import statementet, der blev tilføjet i afsnittet "I gang med Motion One":</p>
 	<Code code={`
-	animate( "body", { opacity: [ 0, 1] }, { duration: 5 })
+	animate( "body", { opacity: [ 0, 1] }, { duration: 1 })
 	`} lang="js"> 
 	</Code>
 	<ul>
 		<li>animate() bruger Motion Ones animate funktion</li>
 		<li>"body" er selectoren - den siger at det er vores body, der skal animeres. Den fungerer på samme måde som en CSS-selector.</li>
 		<li>I Første tuborg-klamme defineres keyframene i animationen: &#123; opacity: [ 0, 1]  &#125;</li>
-		<li>I andet sæt tuborg-klammer defineres indstillingerne for keyframe-animationen: &#123; duration: 5 &#125;</li>
+		<li>I andet sæt tuborg-klammer defineres indstillingerne for keyframe-animationen: &#123; duration: 1 &#125;</li>
 	</ul>
 	</section>
 
@@ -260,7 +262,70 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 		<li>I kodestumpen stagger(1, &#123; start: 2 &#125; refererer 1-tallet til et delay i antal sekunder mellem hvert list item.</li>
 		<li>start: 2 refererer til hvor lang tid der skal gå, før det første list item animeres ind.</li>
 	</ul>
-	<p>I ovenstående eksempel har jeg brugt en unordered list og stagget alle list items. Men du kan sagtens bruge den på andre elementer - f.eks. billeder i en section. Og du kan også lave din keyframe animation vildere:-) Og du behøver ikke nødvendigvis at pakke stagger animationen ind i inView-funktionen.</p>
+	<p>I ovenstående eksempel har jeg brugt en unordered list og stagget alle list items. Men du kan sagtens bruge den på andre elementer - f.eks. billeder i en section, som nedenfor. Og du kan også lave din keyframe animation vildere:-) Og du behøver ikke nødvendigvis at pakke stagger animationen ind i inView-funktionen.</p>
+	<div class="fotosektioninview grid grid-cols-3 gap-2">
+		<Image src={radio} alt="" type="image/webp"></Image>
+		<Image src={radio} alt="" type="image/webp"></Image>
+		<Image src={radio} alt="" type="image/webp"></Image>
+	</div>
+	</section>
+
+	<!-- Timeline animation -->
+	<section class="prose pt-1" id="timelineanimation">
+	<h2 class="text-6xl font-extrabold font-black">Timeline animation</h2>
+	<p>Med en timeline kan flere animationer bindes sammen (chaines), så de eksekveres én efter én. Se animationerne på billedet nedenfor (reload eventuelt for at se animationen):</p>
+	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="opacity-0 timelineanimation" id="timelineanimationimage"></Image>
+	<p>Timeline animationen er lavet med følgende kodestump:</p>
+	<Code code={`
+	/* Timeline animation */
+	inView( "#timelineanimationimage" , () =>{
+	const timelineanimation = [
+	[".timelineanimation", { opacity: 1 }, { duration: 5 }],
+	[".timelineanimation", { transform: "rotate(360deg)" }, { duration: 3 }],
+	[".timelineanimation", { transform: "scale(1.5)" }, { duration: 0.5 }],
+	[".timelineanimation", { transform: "scale(1)" }, { duration: 1 }],
+	[".timelineanimation", { opacity: 0.3 }, { duration: 5 }],
+	]
+	timeline( timelineanimation );
+	})
+	`} lang="js"> 
+	</Code>
+	<ul>
+		<li>Først oprettes  et array til timelineanimationen, så animation kan deles op i små bidder/sekvenser.</li>
+		<li>Hver sekvens i animationen puttes i et sæt firkantede parenteser, og keyframe animationen for hver sekvens defineres.</li>
+	</ul>
+	<p>OBS! Den første animation tager 5 sekunder, og ændrer "opacity" til 1. Opacity på 1 er også default-værdien, så for at gøre elementet usynligt til at starte med, skal html-element have tailwind-class'en opacity-0:</p>
+	<Code code={`
+	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="opacity-0 timelineanimation" id="timelineanimationimage"></Image>
+	`} lang="astro"> 
+	</Code>
+	</section>
+
+	<!-- InView & Return animation -->
+	<section class="prose pt-1" id="inviewandreturn">
+	<h2 class="text-6xl font-extrabold font-black">inView & Return animation</h2>
+	<p>Indtil videre er animationerne blevet eksekveret én gang. Hvis du gerne vil have dem til at starte (forfra) hver gang elementet vises i viewporten, kan du bruge inView()s return funktion. Se eksempelvis billedet herunder. Det er roteret 180 grader, når det kommer ind i viewporten, og bliver så roteret tilbage til 0 grader med animate()-funktionen. Scroller du væk, vender det tilbage til 180 grader, og næste gang det kommer ind i viewporten igen, roterer det til 0 grader igen."</p>
+	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="inviewreturn"></Image>
+	<p>Return funktionen fyres af efter den første animate()-funktionen, jvf. nedenstående eksempel:</p>
+	<Code code={`
+	/* inView & return */
+	inView( ".inviewreturn", ({ target }) => {
+  	animate(
+      target,
+      { rotate: 0 },
+      { delay: 1, duration: 2 },
+  	) 
+    return () => {
+      animate(
+        target,
+        { rotate: 180 }
+      )
+  	}
+	}) 
+	`} lang="js"> 
+	</Code>
+	<p>Læg også mærke til: (&#123;  target &#125; ). Target betyder at callback funktionen får sendt det valgte element med - altså selectoren ".inviewreturn"</p>
+	<p>Det kan så bruges animate-funktionens selector til at sige "vælg den værdi der er i target" - altså .inviewreturn</p>
 	</section>
 
 	<!-- Crossfade -->
@@ -337,7 +402,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	import { animate, stagger, inView, scroll, timeline } from "motion";
 
 	/* Entrance animation */
-	animate( "body", { opacity: [ 0, 1] }, { duration: 5 });
+	animate( "body", { opacity: [ 0, 1] }, { duration: 1 });
 
 	/* inView animation */
 	inView( ".fotoinview" , () =>{
@@ -360,6 +425,41 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 		}
 		)
 	})
+
+	/* Stagger på fotosektion  */
+	inView( ".fotosektioninview" , ({ target }) =>{
+	animate( target.querySelectorAll("img") , 
+		{ opacity: [0, 1] }, 
+		{ duration: 2, delay: stagger(1, { start: 2 }) }
+		)
+	})
+
+	/* Timeline animation */
+	inView( "#timelineanimationimage" , () =>{
+		const timelineanimation = [
+		[".timelineanimation", { opacity: 1 }, { duration: 5 }],
+		[".timelineanimation", { transform: "rotate(360deg)" }, { duration: 3 }],
+		[".timelineanimation", { transform: "scale(1.5)" }, { duration: 0.5 }],
+		[".timelineanimation", { transform: "scale(1)" }, { duration: 1 }],
+		[".timelineanimation", { opacity: 0.3 }, { duration: 5 }],
+		]
+		timeline( timelineanimation );
+	})
+
+	/* inView & return */
+	inView( ".inviewreturn", ({ target }) => {
+  	animate(
+      target,
+      { rotate: 0 },
+      { delay: 1, duration: 2 },
+  	) 
+    return () => {
+      animate(
+        target,
+        { rotate: 180 }
+      )
+  	}
+	})  
 
 	/* Crossfade to billeder */
 	scroll(
