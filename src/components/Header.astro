@@ -31,9 +31,8 @@ x-show="showmenu" x-transition x-on:click="showmenu = false" x-on:click.outside=
     <h1 class="text-4xl lg:text-9xl mb-8">UI lir</h1>
     <p class="text-2xl">Mikrointeraktioner og animationer til dit UI</p>
 </div>
-<!-- Ifinite rolling text banner aka. Marquee banner - inspireret af https://jackwhiting.co.uk/posts/creating-a-marquee-with-tailwind/ -->
-<section class="relative flex overflow-x-hidden bg-pink-800 text-white">
-    <div class="py-4 animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 ">
+<section class="whitespace-nowrap overflow-x-hidden bg-pink-800 text-white py-4">
+    <div class="inline-block animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 ">
         <span>UI Lir</span>
         <span>Fede effekter</span>
         <span>Flotte animationer</span>
@@ -45,7 +44,7 @@ x-show="showmenu" x-transition x-on:click="showmenu = false" x-on:click.outside=
         <span>Mega fedt!</span>
         <span>Dit site bliver bedre!</span>
     </div>
-    <div class="absolute top-0 py-4 animate-infinite-scroll2 whitespace-nowrap [&_span]:mx-6" aria-hidden="true">
+    <div class="inline-block animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 " aria-hidden="true">
         <span>UI Lir</span>
         <span>Fede effekter</span>
         <span>Flotte animationer</span>

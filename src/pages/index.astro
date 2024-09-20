@@ -37,71 +37,63 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	<p>Hvem er ikke vild med et rolling banner (aka marquee banner)? Måske nogen af jer tænker <span class="italic">hvad er det</span>? Se toppen af sitet, lige under hero unit'en. Der har jeg lavet et:-)</p>
 	<p>Et rolling banner kan laves relativt nemt med lidt html, et par keyframe animationer og lidt css/tailwind. Først html'en: I dette eksempel er html'en placeret i Header.astro-filen, da den er en del af Hero unit'en. Men den kan placeres hvor du ønsker det:</p>
 	<Code code={`
-	<section class="relative flex overflow-x-hidden bg-pink-800 text-white">
-		<div class="py-4 animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 ">
-			<span>UI Lir</span>
-			<span>Fede effekter</span>
-			<span>Flotte animationer</span>
-			<span>Høje lyde</span>
-			<span>Livlige og levende webløsninger</span>
-			<span>UI & UX</span>
-			<span>Interaktioner</span>
-			<span>Mikroanimationer</span>
-			<span>Mega fedt!</span>
-			<span>Dit site bliver bedre!</span>
-		</div>
-		<div class="absolute top-0 py-4 animate-infinite-scroll2 whitespace-nowrap [&_span]:mx-6" aria-hidden="true">
-			<span>UI Lir</span>
-			<span>Fede effekter</span>
-			<span>Flotte animationer</span>
-			<span>Høje lyde</span>
-			<span>Livlige og levende webløsninger</span>
-			<span>UI & UX</span>
-			<span>Interaktioner</span>
-			<span>Mikroanimationer</span>
-			<span>Mega fedt!</span>
-			<span>Dit site bliver bedre!</span>
-		</div>
-	  </section>
+<section class="whitespace-nowrap overflow-x-hidden bg-pink-800 text-white py-4">
+    <div class="inline-block animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 ">
+        <span>UI Lir</span>
+        <span>Fede effekter</span>
+        <span>Flotte animationer</span>
+        <span>Høje lyde</span>
+        <span>Livlige og levende webløsninger</span>
+        <span>UI & UX</span>
+        <span>Interaktioner</span>
+        <span>Mikroanimationer</span>
+        <span>Mega fedt!</span>
+        <span>Dit site bliver bedre!</span>
+    </div>
+    <div class="inline-block animate-infinite-scroll whitespace-nowrap [&_span]:mx-6 " aria-hidden="true">
+        <span>UI Lir</span>
+        <span>Fede effekter</span>
+        <span>Flotte animationer</span>
+        <span>Høje lyde</span>
+        <span>Livlige og levende webløsninger</span>
+        <span>UI & UX</span>
+        <span>Interaktioner</span>
+        <span>Mikroanimationer</span>
+        <span>Mega fedt!</span>
+        <span>Dit site bliver bedre!</span>
+    </div>
+</section>
 	`} lang="html">
 	</Code>
-	<p>For at få banneret til at scrolle i uendelighed, skal indholdet i banneret laves to gange, og derefter animeres: Derfor er der to  &lt;div&gt;'er, der er næsten ens.</p>
+	<p>For at få banneret til at scrolle i uendelighed, skal indholdet i banneret laves to gange, og derefter animeres: Derfor er der to  &lt;div&gt;'er, der er ens.</p>
 	<ul>
-		<li>De to  &lt;div&gt;'er er pakket ind i en ydre  &lt;section&gt;, der definerer bannerets udseende (farver mm.), og er positioneret "relative"</li>
+		<li>De to  &lt;div&gt;'er er pakket ind i en ydre  &lt;section&gt;, der definerer bannerets udseende (farver mm.). Dertil har den egenskaben "whitespace-nowrap," som gør at de to &lt;div&gt;'er' placeres efter hinanden i stedet for oven på hinanden.</li>
 		<li>Første  &lt;div&gt; er den, der er på skærmen til at starte med. Den scroller mod venstre ved hjælp af animate-infinite-scroll animationen.</li>
-		<li>[&_span]:mx-6 er en lille genvej: Den tilføjer mx-6 class'en på alle de child &lt;span&gt; elementer</li>
-		<li>Anden  &lt;div&gt; er positioneret absolute, og animerere fra langt ude i venstre side, og ind i skærmen ved hjælp af animate-infinite-scroll2 animationen.</li>
+		<li>[&_span]:mx-6 er en lille genvej: Den tilføjer mx-6 class'en på alle de child &lt;span&gt; elementer, der er i &lt;div&gt;'en.</li>
+		<li>Anden  &lt;div&gt; identisk med den første, men fordi den ligger efter den første pga. "whitespace-nowrap", er den til at starte med skubbet ud af skærmen. Den animererer (også) fra langt ude i højre side, og ind i skærmen, ved hjælp af animate-infinite-scroll animationen.</li>
 		<li>aria-hidden="true" skjuler &lt;div&gt; nr. 2 for skærmlæsere/robotter</li>
 	</ul>
-
-
-
-	<p>Dernæst animate-infinite-scroll-animationerne: De tilføjes og tilpasses via tailwind.config.mjs-filen:</p>
+	<p>Dernæst animate-infinite-scroll-animationen: Den tilføjes og tilpasses via tailwind.config.mjs-filen:</p>
 	<Code code={`
 	theme: {
 		extend: {
             animation: {
                 'infinite-scroll': 'infinite-scroll 25s linear infinite',
-                'infinite-scroll2': 'infinite-scroll2 25s linear infinite',
               },
               keyframes: {
                 'infinite-scroll': {
                   from: { transform: 'translateX(0)' },
                   to: { transform: 'translateX(-100%)' },
                 },
-                'infinite-scroll2': {
-                    from: { transform: 'translateX(100%)' },
-                    to: { transform: 'translateX(0)' },
-                  }
               }
         },
 	},
 	`} lang="js">
 	</Code>
 	<ul>
-		<li><span class="italic">infinite-scroll<span> animerer indholdet, der er på skærmen fra 0 og helt ud af skærmen (-100%).</li>
-		<li><span class="italic">infinite-scroll2<span> starter med at rykke indholdet 100% ud af skærmens højre side, og animerer det så til 0 (på skærmen)</li>
+		<li><span class="italic">infinite-scroll</span> animerer indholdet, fra dets aktuelle startposition, og 100% mod venstre, ud af skærmen (-100%).</li>
 	</ul>
+	<p>OBS! Det er vigtigt at indholdet af de &lt;div&gt;'er er længere end containeren, de skal udfylde! </p>
 	</section>
 
 	<!-- Lydeffekter -->
