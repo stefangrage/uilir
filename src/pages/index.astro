@@ -8,6 +8,9 @@ import radio from "../assets/images/radio.jpg"
 import kodakelektralitesh from "../assets/images/kodak-elektralite-sh.jpg";
 import kodakelektralitefarver from "../assets/images/kodak-elektralite-farver.jpg";
 import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
+import baad1 from "../assets/images/baad1.png";
+import baad2 from "../assets/images/baad2.png";
+import baad3 from "../assets/images/baad3.png";
 ---
 <MainLayout title="Titel">
 	<!-- Intro/Indholdsfortegnelse mm. -->
@@ -27,6 +30,8 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 		<li><Link href="#timelineanimation" alt="">Timeline animation</Link></li>	
 		<li><Link href="#inviewandreturn" alt="">inView & return animation</Link></li>		
 		<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
+		<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
+		<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
 		<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
 	</ul>
 	</section>
@@ -396,8 +401,8 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 
 	<!-- Crossfade -->
 	<section class="prose pt-1" id="crossfade">
-	<h2 class="text-6xl font-extrabold font-black">Crossfade mellem to billeder</h2>
-	<p>Lad os se på hvordan man kan crossfade mellem to billeder, eksempelvis:</p>
+	<h2 class="text-6xl font-extrabold font-black">Crossfade on scroll</h2>
+	<p>Lad os se på hvordan man kan crossfade mellem to billeder baseret på hvor langt brugeren er scrollet i en container, som i eksemplet nedenfor:</p>
 	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
 		<Image src={kodakelektralitefarver} alt="" class="crossfadetopimg object-cover h-screen absolute top-0 z-0 my-0" />
 		<Image src={kodakelektralitesh} alt="" class="crossfadebottomimg object-cover h-screen absolute top-0 z-0 my-0" />	
@@ -427,6 +432,90 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 	</Code>
 	<p>Script stumpen bruger Motion One scroll-funktionen til at checke hvor langt ned i elementet med "crossfadeimages" classen (den relative container), brugeren er scrollet. Animate-funktionen bruges til at ændre opacity fra 1 til 0 på det nederste billede. Offset bruges til at styre hvornår crossfadet skal starte/være færdiggjort. I dette tilfælde starter opacity-animationen 25vh FØR det relative element kommer ind på skærmen.</p>
 	</section>
+
+	<!-- Parallax med tekstboks -->
+	<section class="prose pt-1" id="parallaxmedtekstbox">
+	<h2 class="text-6xl font-extrabold font-black">Parallax med tekstboks</h2>
+	<p>Parallax-sektioner ses ofte anvendt på webdoks. Parallax-sektioner kan laves med Motion Ones scroll-funktion. Scroll-funktionen lytter på hvor langt man er scrollet ned i et givent element, og så kan man animere et andet element oven på dette for at lave parallax-effekten. Se sektionen nedenfor, hvor teksten bevæger sig hurtigere end baggrunden. </p>
+	<section class="parallaxcontainer bg-teal-100 mt-8 h-screen w-100 bg-cover bg-center" style="background-image: url('/hurtig.jpg');">
+	<p  class="parallaxelement w-3/4 mx-auto p-10 bg-slate-50 text-xl">Cupcake lollipop caramels toffee pastry. Bear claw dessert cotton candy ice cream cotton candy lemon drops jelly biscuit. Topping marzipan tart bonbon powder.</p>
+	</section>
+	<p>HTML'en består af en section med et baggrundsbillede og en paragraph med tekst. Begge stylet med Tailwind:</p>
+	<Code code={`
+	<section class="bg-teal-100 mt-8 h-screen w-100 bg-cover bg-center" style="background-image: url('/hurtig.jpg');">
+	<p class="parallaxelement w-3/4 mx-auto p-10 bg-slate-50 text-xl">Cupcake lollipop caramels toffee pastry. Bear claw dessert cotton candy ice cream cotton candy lemon drops jelly biscuit. Topping marzipan tart bonbon powder.</p>
+	</section>
+	`} lang="html">
+	</Code>
+	<ul>
+		<li>OBS! Baggrundsbilledet på section-elementet er lagt i public-mappen, så det er nemt at tilføje med style-tagget.</li>
+		<li>Tekst-afsnittet har class'en parallaxelement, som bruges til at parallaxe med JS/Motion.</li>
+	</ul>
+	<p>Så er der javascript-stumpen, der kan laves kort og præcist med Motion Ones scroll-funktion:</p>
+	<Code code={`
+	/* Parallax med tekstboks */ 
+	scroll(animate(".parallaxelement", { y: [50, 500] }), {
+		target: document.querySelector(".parallaxelement"),
+	});
+	`} lang="js">
+	</Code>
+	<ul>
+		<li>scroll() bruges til at lytte om der scrolles i "noget", og hvis ja: Udfører animate()-funktionen, som laver en forskydelse af y-aksen jvf. værdierne 50 og 500</li>
+		<li>target: siger hvilket element, der skal lyttes efter, om der bliver scrollet i - i dette tilfælde det samme som det vi animerer med scroll-funktionen.</li>
+	</ul>
+	</section>
+
+	<!-- Parallaxgrafik -->
+	<section class="pt-1" id="parallaxgrafik">
+	<h2 class="prose text-6xl font-extrabold font-black">Parallaxgrafik</h2>
+	<p class="prose">Parallax-sektioner kan også nemt bruges til at lave en fin, lille grafisk kollage: 
+	<section class="parallaxgrafik fullwidthsection">	
+		<div class="bg-teal-100 mt-8 h-screen w-full bg-cover bg-center grid grid-cols-12 overflow-hidden" style="background-image: url('/havet.jpg');">
+			<Image src={baad1} alt="" class="col-start-2 parallaxgrafik1"></Image>
+			<Image src={baad2} alt="" class="col-start-5 parallaxgrafik2"></Image>
+			<Image src={baad3} alt="" class="col-start-3 col-span-2 parallaxgrafik3"></Image>
+		</div>
+	</section>
+	<p>HTML'en består af en section med class'en parallaxgrafik, som bruges til JS/Motion One stumpten. Dertil er der en &lt;div&gt; med et baggrundsbillede (inline styles) og et 12-kolonnet grid, som bruges til at placere de grafiske elementer (de små både). Alt er stylet med Tailwind, bort set fra baggrundsbilledet:</p>
+	<Code code={`
+	<section class="parallaxgrafik fullwidthsection">	
+		<div class="bg-teal-100 mt-8 h-screen w-full bg-cover bg-center grid grid-cols-12 overflow-hidden" style="background-image: url('/havet.jpg');">
+			<Image src={baad1} alt="" class="col-start-2 parallaxgrafik1"></Image>
+			<Image src={baad2} alt="" class="col-start-5 parallaxgrafik2"></Image>
+			<Image src={baad3} alt="" class="col-start-3 col-span-2 parallaxgrafik3"></Image>
+		</div>
+	</section>
+	`} lang="html">
+	</Code>
+	<ul>
+		<li>OBS! Baggrundsbilledet på &lt;div&gt;'en er lagt i public-mappen, så det er nemt at tilføje med style-tagget.</li>
+		<li>Billederne af bådene er placeret i grid'et ved hjælp af forskellige Tailwind col-start classes.</li>
+		<li>Billederne af bådene har hver deres class (parallaxgrafik1, 2 og 3), som bruges til at parallaxe med JS/Motion One.</li>
+	</ul>
+	<p>Så er der javascript-stumpen, der animerer grafik-elementerne med Motion Ones scroll-funktion:</p>
+	<Code code={`
+	/* Parallaxgrafik */ 
+	scroll(animate(".parallaxgrafik1", { y: [400, -600] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+	scroll(animate(".parallaxgrafik2", { x:[-100, 100], y: [800, -1800] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+	scroll(animate(".parallaxgrafik3", { x: [-1500, 2000], y: [400, 0] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+	`} lang="js">
+	</Code>
+	<p>scroll()-funktionen bruges tre gange til at animere de forskellige grafik-elementer. Funktionen er stort set ens i alle tre tilfælde:</p>
+	<ul>
+		<li>scroll() bruges til at lytte om der scrolles i "noget", og hvis ja: Udfører animate()-funktionen</li>
+		<li>animate()-funktionen tager grafikelementet (parallaxgrafik1, parallaxgrafik2 og parallaxgrafik3) og forskyder det i x- og y- retningen.</li>
+		<li>target: siger hvilket element, der skal lyttes efter, om der bliver scrollet i - i dette tilfælde &lt;section&gt;'en, der omkranser alt parallax-indholdet, og har class'en parallaxgrafik</li>
+		<li>offset: er en beskrivelse af hvornår animationen skal starte og slutte. "start end" betyder at animationen skal starte "når starten af target elementet rammer bunden/slutnignen af containeren (skærmen)" og "end start" betyder at animationen skal væres slut, når bunden/slutningen af target elementet rammer toppen/starten af containeren (skærmen).</li>
+	</ul>
+	</section>
+
+	
 
 	<!-- Progress bar -->
 	<section id="progressbar" class="prose pt-1">
@@ -465,7 +554,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 
 <script>
 	/* Import af Motion One bibliotek */
-	import { animate, stagger, inView, scroll, timeline } from "motion";
+	import { animate, stagger, inView, scroll, ScrollOffset, timeline } from "motion";
 
 	/* Entrance animation */
 	animate( "body", { opacity: [ 0, 1] }, { duration: 1 });
@@ -536,6 +625,22 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 			offset: ["-25vh", "25vh"]
 		}
 	);
+
+	/* Parallax med tekstboks */ 
+	scroll(animate(".parallaxelement", { y: [50, 500] }), {
+		target: document.querySelector(".parallaxelement"),
+	});
+
+	/* Parallaxgrafik */ 
+	scroll(animate(".parallaxgrafik1", { y: [400, -600] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+	scroll(animate(".parallaxgrafik2", { x:[-100, 100], y: [800, -1800] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+	scroll(animate(".parallaxgrafik3", { x: [-1500, 2000], y: [400, 0] }), {
+		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
 
 	/* Progress-baren/læseindikatoren */
 	scroll( animate(".progress-bar", { scaleX: [0, 1] }));
