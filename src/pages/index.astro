@@ -220,7 +220,7 @@ import baad3 from "../assets/images/baad3.png";
 	`} lang="js"> 
 	</Code>
 	<p>Så er Motion One installeret og klar til at blive brugt:-)</p>
-	<p>OBS! En del af animationerne kan komme til at gøre viewporten for bred, så der kommer horisontale scrollbars. Så det kan blive nødvendigt at sætte "overflow-hidden" på dele af sitet. På det her site, er der tilføjet en div med class overflow-hidden rundt om main-elementet i MainLayout.astro. Det gør at elementer kan blive bredere end main-sektionen, f.eks. når de skal animere ind, men sitet bliver ikke bredere end viewporten:</p>
+	<p>OBS! En del af animationerne kan komme til at gøre viewporten for bred, så der kommer horisontale scrollbars. Så det kan blive nødvendigt at sætte "overflow-hidden" på dele af sitet. Forsøg at være så restriktiv som muligt i brugen af overflow-hidden: Sørg for at gøre det på sektioner/komponenenter i stedet for hele sitet, da det i givet fald kan give problemer med sticky elementer:</p>
 	<Code code={`
 	<header class="bg-pink-200">
 		<Header></Header>
@@ -400,7 +400,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Crossfade -->
-	<section class="prose pt-1" id="crossfade">
+	<section class="prose pt-1 overflow-hidden" id="crossfade">
 	<h2 class="text-6xl font-extrabold font-black">Crossfade on scroll</h2>
 	<p>Lad os se på hvordan man kan crossfade mellem to billeder baseret på hvor langt brugeren er scrollet i en container, som i eksemplet nedenfor:</p>
 	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
@@ -515,7 +515,65 @@ import baad3 from "../assets/images/baad3.png";
 	</ul>
 	</section>
 
-	
+	<!-- Sticky -->
+	<section class="pt-1" id="stickysektioner">
+	<h2 class="prose text-6xl font-extrabold font-black">Sticky</h2>
+	<p>"Sticky" sektioner ses også ofte anvendt i webfeatures - indimellem kombineret med parallax. Målet er at give brugerne lidt ro til at læse tekstbidderne. Sticky-sektioner kan laves nemt bare med Tailwind. Se de tre sektioner nedenfor, som "sticyk'er" teksten fast i toppen af skærmen. </p>
+	<article class="fullwidthsection">
+		<div class="flex items-center h-screen w-100 bg-cover bg-center" style="background-image: url('/astro.jpg')" >
+			<p class="w-3/4 lg:w-1/2 mx-auto p-10 bg-slate-50 text-xl sticky top-1/4">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
+		</div>
+		<div class="flex items-center h-screen w-100 bg-cover bg-center" style="background-image: url('/forsker.jpg')" >
+			<p class="w-3/4 lg:w-1/2 mx-auto p-10 bg-slate-50 text-xl sticky top-1/4">Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
+		</div>
+		<div class="flex items-center h-screen w-100 bg-cover bg-center" style="background-image: url('/penge.jpg')" >
+			<p class="w-3/4 lg:w-1/2 mx-auto p-10 bg-slate-50 text-xl sticky top-1/4">Some pilots get picked and become television programs. Some don't, become nothing.</p>
+		</div>	
+	</article>
+	<p>For at lave sticky-sektioner gælder det egentlig bare om at tilføje tailwinds sticky class, og så definere hvor den skal være sticky - her top-0:</p>
+	<Code code={`
+	<div class="flex items-center h-screen w-100 bg-cover bg-center" style="background-image: url('/astro.jpg')" >
+		<p class="w-3/4 lg:w-1/2 mx-auto p-10 bg-slate-50 text-xl sticky top-1/4">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
+	</div>
+	`} lang="html">
+	</Code>
+	<p>En anden måde at bruge "sticky" sektioner på er at sticky'e hele sektioner, eventuelt med en lille parallaxe-effekt på: </p>
+	<article class="fullwidthsection">
+		<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/astro.jpg')" >
+			<p class="w-3/4 lg:w-1/4 ml-2 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax1">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
+		</div>
+		<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/forsker.jpg')" >
+			<p class="w-3/4 lg:w-1/4 ml-2 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax2">Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p>
+		</div>
+		<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/penge.jpg')" >
+			<p class="w-3/4 lg:w-1/4 ml-2 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax3">Some pilots get picked and become television programs. Some don't, become nothing.</p>
+		</div>	
+	</article>
+	<p>Her er sticky class'en placeret på elementerne med billedbaggrunde på:</p>
+	<Code code={`
+		<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/astro.jpg')" >
+			<p class="w-3/4 lg:w-1/4 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax1">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
+		</div>
+	`} lang="html">
+	</Code>
+	<p>Parallax'en er lavet med en JS/Motion One kodestump efter samme fremgangsmåde som <Link href="#parallaxmedtekstbox">Parallax med tekstboks"</Link> dokumentationen:</p>
+	<Code code={`
+	scroll(animate(".stickyparallax1", { y: [-300, 0] }), {
+		target: document.querySelector(".stickyparallax1"),
+	});
+	`} lang="js">
+	</Code>
+
+
+	</section>
+
+	<!-- Video scrubber -->
+	<section class="sticky">
+	<h2 class="prose text-6xl font-extrabold font-black">Video scrubber</h2>
+	<p>Video scrubbing går ud på at afspille en video alt efter hvor meget man er scrollet ned i et container-element. Det kombineres typisk med "position sticky." Videon skal helst være meget kompakt, ellers bliver det noget tungt for browseren at arbejde med. Se eksemplet nedenfor:</p>
+	<div class="videocontainer sticky top-1/4 w-full">video</div>
+	<div class="videoarticle h-screen"></div>
+	</section>
 
 	<!-- Progress bar -->
 	<section id="progressbar" class="prose pt-1">
@@ -640,6 +698,17 @@ import baad3 from "../assets/images/baad3.png";
 	});
 	scroll(animate(".parallaxgrafik3", { x: [-1500, 2000], y: [400, 0] }), {
 		target: document.querySelector(".parallaxgrafik"), offset: ["start end", "end start"]
+	});
+
+	/* sticky parallax */
+	scroll(animate(".stickyparallax1", { y: [-300, 0] }), {
+		target: document.querySelector(".stickyparallax1"),
+	});
+	scroll(animate(".stickyparallax2", { y: [-300, 0] }), {
+		target: document.querySelector(".stickyparallax2"),
+	});
+	scroll(animate(".stickyparallax3", { y: [-300, 0] }), {
+		target: document.querySelector(".stickyparallax3"),
 	});
 
 	/* Progress-baren/læseindikatoren */

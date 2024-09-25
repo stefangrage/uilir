@@ -19,11 +19,9 @@ const { title } = Astro.props;
 			<Header></Header>
 		</header>
 		
-		<div class="overflow-hidden">
-			<main class="container mx-auto p-8 prose prose-xl max-w-4xl">
-				<slot />
-			</main>
-		</div>
+		<main class="container mx-auto p-8 prose prose-xl max-w-4xl">
+			<slot />
+		</main>
 
 		<footer class="bg-gradient-to-r to-pink-500 from-yellow-300">
 			<Footer></Footer>
