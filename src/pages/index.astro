@@ -23,6 +23,7 @@ import baad3 from "../assets/images/baad3.png";
 		<li><Link href="#rollingbanner" alt="">Rolling/marquee banner</Link></li>
 		<li><Link href="#lydeffekter" alt="">Lydeffekter</Link></li>
 		<li><Link href="#customcursor" alt="">Custom cursor</Link></li>
+		<li><Link href="#videoonhover" alt="">:hover video</Link></li>
 		<li><Link href="#foerstemotiononestump" alt="">I gang med Motion One</Link></li>	
 		<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
 		<li><Link href="#inview" alt="">inView</Link></li>	
@@ -207,6 +208,72 @@ import baad3 from "../assets/images/baad3.png";
 	</Code>
 	<p>@layer base betyder at vi “bygger videre” på Tailwind, og er en konvention for det med at arbejde med Tailwind.</p>
 	<p>Dernæst defineres de elementer (a og button), som cursoren skal være aktiv ved – du kan tilføje alle de elementer du vil. @apply tilføjer Tailwind-classes til de valgte elementer, i dette tilfælde den nye custom cursor class.</p>
+	</section>
+
+	<!-- Afspil video på :hover -->
+	<section id="videoonhover" class="prose pt-1" x-data="{ videopopup: false }">
+		<h2 class="text-6xl font-extrabold font-black cursor cursor-handcursor">:hover video</h2>
+		<p>Internettet elsker videoer. Også små effektvideoer og GIF'er. GIF'er skal dog (typisk) ikke være GIF'er - brug små videoer i stedet. Men alt i alt: Der skal nogen på dit website!</p>
+		<p>Først og fremmest kan du lave små videoer, der afspiller når brugeren kører musen over dem (<span class="font-bold" @mouseenter="$refs.hovervideo.play()" @mouseleave="$refs.hovervideo.pause()">eller noget tekst?</span>), som i eksemplet nedenfor.</p>
+		<video x-ref="hovervideo" @mouseenter="$refs.hovervideo.play()" @mouseleave="$refs.hovervideo.pause()">
+			<source src="regnvejr.mp4" type="video/mp4">
+			<source src="regnvejr.webm" type="video/webm">
+		</video>
+		<h3>Definer scopet</h3>
+		<p>Det er ret nemt. Start med at tilføje en x-data attribut for at definere “scopet” for videoen - du kan typisk bruge en section eller en component til at definere scopet for videoen. I dette eksempel, har jeg sat scopet til at være denne section:</p>
+		<Code code={`
+	<section id="videoonhover" x-data>
+		`} lang="html">
+		</Code>
+		<h3>Tilføj videoen og start/stop afspilning</h3>
+		<p>Som det næste, skal der tilføjes en video. Videoen skal have lidt JS til at starte og stoppe afspilning, når musen køres over. Det klares med Alpine JS:</p>
+		<Code code={`
+	<video x-ref="hovervideo" @mouseenter="$refs.hovervideo.play()" @mouseleave="$refs.hovervideo.pause()">
+	<source src="regnvejr.mp4" type="video/mp4">
+	<source src="regnvejr.webm" type="video/webm">
+	</video>
+		`} lang="html">
+		</Code>
+		<ul>
+			<li>x-ref er en reference til videoen, som bruges til lidt javascript - her er videoen døbt "hovervideo"</li>
+			<li>@mouseenter="$refs.hovervideo.play()" er alpinejs, og tager referencen til videoen, og starter afspilning, når musen køres ind over videoen</li>
+			<li>@mouseleave="$refs.hovervideo.pause()" er (også) alpinejs, og tager referencen til videoen, og pauser afspilning, når musen køres ud af videoen</li>
+		</ul>
+		<p>Hvis du hellere vil starte/stoppe afspilning ved at køre musen over noget andet (tekst?), kan html'en se ud som følgende:</p>
+		<Code code={`
+	<span class="font-bold" @mouseenter="$refs.hovervideo.play()" @mouseleave="$refs.hovervideo.pause()">eksempelvis tekst</span>
+		`} lang="html">
+		</Code>
+		<p>Overvej hvordan det skal fungere/erstattes på mobil, for det der med :hover fungerer ikke super godt på mobil:-/</p>
+		<h3 class="text-4xl font-bold">Video popup</h3>
+		<p>Du kan også få videoen til at <span class="font-bold" @mouseover="videopopup = ! videopopup" @mouseleave="videopopup = ! videopopup">poppe op et andet sted</span>.</p>
+		<p>For at gøre det, skal du definere en variabel i din x-data attribut:</p>
+		<Code code={`
+	<section id="videoonhover" class="" x-data="{ videopopup: false }">
+		`} lang="html">
+		</Code>
+		<p>Dernæst kan du et element, tekst eksempelvis, der ændrer variablens værdi mellem true og false, når musen kører over det:</p>
+		<Code code={`
+	<span class="font-bold" @mouseover="videopopup = ! videopopup" @mouseleave="videopopup = ! videopopup">poppe op et andet sted</span>
+		`} lang="html">
+		</Code>
+		<p>Som det sidste, skal der også laves et video-element, der bruger true/false variablen og alpinejs x-show attributten til at vise/skjule videoen, alt afhængig af true/false variablens værdi:</p>
+		<Code code={`
+	<div class="videopopup fixed top-16 right-16 p-8 border-black border-4 bg-pink-500 z-50 drop-shadow-xl" x-show="videopopup">
+	<video x-ref="videopopup" autoplay class="m-0 p-0 border-2 border-black">
+	<source src="regnvejr.mp4" type="video/mp4">
+	<source src="regnvejr.webm" type="video/webm">			 
+	</video>
+	</div>
+		`} lang="html">
+		</Code>
+		
+		<div class="videopopup fixed top-16 right-16 p-8 border-black border-4 bg-pink-500 z-50 drop-shadow-xl" x-show="videopopup">
+			<video x-ref="videopopup" autoplay class="m-0 p-0 border-2 border-black">
+				<source src="regnvejr.mp4" type="video/mp4">
+				<source src="regnvejr.webm" type="video/webm">			 
+			</video>
+		</div>
 	</section>
 
 	<!-- Første Motion One stump -->
@@ -568,6 +635,32 @@ import baad3 from "../assets/images/baad3.png";
 
 	</section>
 
+	<!-- Sektion med mange elementer, der animerer ind i viewporten -->
+	<section class="" id="mangesektioner">
+	<h2 class="prose text-6xl font-extrabold font-black">Sektion med mange elementer der animerer ind</h2>
+	<p>Hvordan man kan animere mange ting ind i skærmen på én gang, lidt ligesom på <Link href="https://www.dr.dk/nyheder/webfeature/facebookgrupper" target="_blank">DR's webfeature om Facebook</Link>?</p>
+	
+	<article class="">
+		<div class="sticky top-1/4 mangeelementerinview grid grid-cols-5">
+		  <div class="p-8 bg-green-700 text-center text-white mangeelementer1 translate-x-[-1500px]">1</div>
+		  <div class="p-8 bg-blue-500 text-center text-white mangeelementer2 translate-x-[-1000px]">2</div>
+		  <div class="p-8 bg-orange-400 text-center text-white mangeelementer3 translate-x-[-500px]">3</div>
+		  <div class="p-8 bg-black text-center text-white mangeelementer4 translate-x-[-2000px]">4</div>
+		  <div class="p-8 bg-purple-600 text-center text-white mangeelementer5">5</div>
+		  <div class="p-8 bg-lime-600 text-center text-white mangeelementer6">6</div>
+		  <div class="p-8 bg-slate-400 text-center text-white mangeelementer7">7</div>
+		  <div class="p-8 bg-orange-600 text-center text-white mangeelementer8">8</div>
+		  <div class="p-8 bg-red-400 text-center text-white mangeelementer9">9</div>
+		  <div class="p-8 bg-pink-500 text-center text-white mangeelementer10">10</div>
+		</div>
+		<div class="h-screen">
+		</div>
+	  </article>  
+
+	</section>
+
+
+
 	<!-- Video scrubber -->
 	<section class="sticky">
 	<h2 class="prose text-6xl font-extrabold font-black">Video scrubber</h2>
@@ -711,6 +804,32 @@ import baad3 from "../assets/images/baad3.png";
 	scroll(animate(".stickyparallax3", { y: [-300, 0] }), {
 		target: document.querySelector(".stickyparallax3"),
 	});
+
+	/* Mange elementer der animerer ind */
+	inView( ".mangeelementerinview", () =>{
+		animate( ".mangeelementer1", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 2 }) 
+		animate( ".mangeelementer2", { x: [-1500, 0 ], y:[-500, 0] }, { duration: 3 })
+		animate( ".mangeelementer3", { x: [-1000, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer4", { x: [-500, 0 ], y:[-500, 0] }, { duration: 2 })
+		animate( ".mangeelementer5", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 3 })
+		animate( ".mangeelementer6", { x: [2000, 0 ], y:[-1000, 0] }, { duration: 3 })
+		animate( ".mangeelementer7", { x: [1500, 0 ]}, { duration: 2 })
+		animate( ".mangeelementer8", { x: [1000, 0 ]}, { duration: 3 })
+		animate( ".mangeelementer9", { x: [500, 0 ]}, { duration: 3 })
+		animate( ".mangeelementer10", { x: [2000, 0 ], y:[1000, 0] }, { duration: 2 })
+    return () => {
+		animate( ".mangeelementer1", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 2 }) 
+		animate( ".mangeelementer2", { x: [-1500, 0 ], y:[-500, 0] }, { duration: 3 })
+		animate( ".mangeelementer3", { x: [-1000, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer4", { x: [-500, 0 ], y:[-500, 0] }, { duration: 2 })
+		animate( ".mangeelementer5", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 3 })
+		animate( ".mangeelementer6", { x: [2000, 0 ], y:[-1000, 0] }, { duration: 3 })
+		animate( ".mangeelementer7", { x: [1500, 0 ]}, { duration: 2 })
+		animate( ".mangeelementer8", { x: [1000, 0 ]}, { duration: 3 })
+		animate( ".mangeelementer9", { x: [500, 0 ]}, { duration: 3 })
+		animate( ".mangeelementer10", { x: [2000, 0 ], y:[1000, 0] }, { duration: 2 })
+    	}
+  	})
 
 	/* Progress-baren/læseindikatoren */
 	scroll( animate(".progress-bar", { scaleX: [0, 1] }));

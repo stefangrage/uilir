@@ -12,9 +12,10 @@ import Link from '../components/Link.astro';
 <nav id="mobilmenu" class="fixed top-0 bottom-0 right-0 left-0 bg-slate-50 z-40" 
 x-show="showmenu" x-transition x-on:click="showmenu = false" x-on:click.outside="showmenu = false">
     <ul class="flex flex-col h-full justify-center [&_li]:text-center [&_li]:py-2">
-        <li><Link href="#rollingbanner" alt="">Rolling/marquee banner</Link></li>
+		<li><Link href="#rollingbanner" alt="">Rolling/marquee banner</Link></li>
 		<li><Link href="#lydeffekter" alt="">Lydeffekter</Link></li>
 		<li><Link href="#customcursor" alt="">Custom cursor</Link></li>
+		<li><Link href="#videoonhover" alt="">:hover video</Link></li>
 		<li><Link href="#foerstemotiononestump" alt="">I gang med Motion One</Link></li>	
 		<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
 		<li><Link href="#inview" alt="">inView</Link></li>	
