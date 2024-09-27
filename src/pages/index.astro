@@ -20,21 +20,24 @@ import baad3 from "../assets/images/baad3.png";
 	<p>Kodestumperne forudsætter at du bruger starteren <Link href="https://github.com/stefangrage/did-e24-starter.git" target="_blank">DiDe starter templaten</Link> med Astro, Tailwind, Alpine, Motion One mm..</p>
 	<h3 class="">Indholdsfortegnelse</h3>
 	<ul>
-		<li><Link href="#rollingbanner" alt="">Rolling/marquee banner</Link></li>
-		<li><Link href="#lydeffekter" alt="">Lydeffekter</Link></li>
-		<li><Link href="#customcursor" alt="">Custom cursor</Link></li>
-		<li><Link href="#videoonhover" alt="">:hover video</Link></li>
-		<li><Link href="#foerstemotiononestump" alt="">I gang med Motion One</Link></li>	
-		<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
-		<li><Link href="#inview" alt="">inView</Link></li>	
-		<li><Link href="#stagger" alt="">Stagger</Link></li>
-		<li><Link href="#timelineanimation" alt="">Timeline animation</Link></li>	
-		<li><Link href="#inviewandreturn" alt="">inView & return animation</Link></li>		
-		<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
-		<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
-		<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
-		<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
-		<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
+		<div class="columns-2 gap-8 pt-4">
+			<li><Link href="#rollingbanner" alt="">Rolling/marquee banner</Link></li>
+			<li><Link href="#lydeffekter" alt="">Lydeffekter</Link></li>
+			<li><Link href="#customcursor" alt="">Custom cursor</Link></li>
+			<li><Link href="#videoonhover" alt="">:hover video</Link></li>
+			<li><Link href="#foerstemotiononestump" alt="">Animation med Motion One</Link></li>	
+			<li><Link href="#entranceanimation" alt="">Entrance animation</Link></li>
+			<li><Link href="#inview" alt="">inView</Link></li>	
+			<li><Link href="#stagger" alt="">Stagger</Link></li>
+			<li><Link href="#timelineanimation" alt="">Timeline animation</Link></li>	
+			<li><Link href="#inviewandreturn" alt="">inView & return animation</Link></li>		
+			<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
+			<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
+			<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
+			<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
+			<li><Link href="#mangesektioner" alt="">Sektion med mange elementer der animerer ind</Link></li>	
+			<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
+		</div>
 	</ul>
 	</section>
 
@@ -278,7 +281,7 @@ import baad3 from "../assets/images/baad3.png";
 
 	<!-- Første Motion One stump -->
 	<section class="prose pt-1" id="foerstemotiononestump">
-	<h2 class="text-6xl font-extrabold font-black">I gang med Motion One</h2>
+	<h2 class="text-6xl font-extrabold font-black">Animation med Motion One</h2>
 	<p>For at bruge Motion One, skal du i bunden af din side/template/komponent importere Motion One biblioteket i et script tag:</p>
 	<Code code={`
 	<script>
@@ -636,16 +639,15 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Sektion med mange elementer, der animerer ind i viewporten -->
-	<section class="" id="mangesektioner">
+	<section class="pt-1" id="mangesektioner">
 	<h2 class="prose text-6xl font-extrabold font-black">Sektion med mange elementer der animerer ind</h2>
 	<p>Hvordan man kan animere mange ting ind i skærmen på én gang, lidt ligesom på <Link href="https://www.dr.dk/nyheder/webfeature/facebookgrupper" target="_blank">DR's webfeature om Facebook</Link>?</p>
-	
 	<article class="">
 		<div class="sticky top-1/4 mangeelementerinview grid grid-cols-5">
-		  <div class="p-8 bg-green-700 text-center text-white mangeelementer1 translate-x-[-1500px]">1</div>
-		  <div class="p-8 bg-blue-500 text-center text-white mangeelementer2 translate-x-[-1000px]">2</div>
-		  <div class="p-8 bg-orange-400 text-center text-white mangeelementer3 translate-x-[-500px]">3</div>
-		  <div class="p-8 bg-black text-center text-white mangeelementer4 translate-x-[-2000px]">4</div>
+		  <div class="p-8 bg-green-700 text-center text-white mangeelementer1">1</div>
+		  <div class="p-8 bg-blue-500 text-center text-white mangeelementer2">2</div>
+		  <div class="p-8 bg-orange-400 text-center text-white mangeelementer3">3</div>
+		  <div class="p-8 bg-black text-center text-white mangeelementer4">4</div>
 		  <div class="p-8 bg-purple-600 text-center text-white mangeelementer5">5</div>
 		  <div class="p-8 bg-lime-600 text-center text-white mangeelementer6">6</div>
 		  <div class="p-8 bg-slate-400 text-center text-white mangeelementer7">7</div>
@@ -656,7 +658,56 @@ import baad3 from "../assets/images/baad3.png";
 		<div class="h-screen">
 		</div>
 	  </article>  
-
+	<h3>Teknikken bag</h3>
+	<p>I html'en: Først har jeg lavet en container/article det hele. Dernæst to &lt;div&gt;'er: Den første &lt;div&gt; består af et grid på 5 kolonner. Inde i det grid er der en masse &lt;div&gt;'er, med hver sin class (mangeelementer1...10). &lt;div&gt;en er position: sticky. &lt;div&gt; nr. 2 fungerer bare som fyldstof:</p>
+	<Code code={`
+	<article class="">
+	<div class="sticky top-1/4 mangeelementerinview grid grid-cols-5">
+		  <div class="p-8 bg-green-700 text-center text-white mangeelementer1">1</div>
+		  <div class="p-8 bg-blue-500 text-center text-white mangeelementer2">2</div>
+		  <div class="p-8 bg-orange-400 text-center text-white mangeelementer3">3</div>
+		  <div class="p-8 bg-black text-center text-white mangeelementer4">4</div>
+		  <div class="p-8 bg-purple-600 text-center text-white mangeelementer5">5</div>
+		  <div class="p-8 bg-lime-600 text-center text-white mangeelementer6">6</div>
+		  <div class="p-8 bg-slate-400 text-center text-white mangeelementer7">7</div>
+		  <div class="p-8 bg-orange-600 text-center text-white mangeelementer8">8</div>
+		  <div class="p-8 bg-red-400 text-center text-white mangeelementer9">9</div>
+		  <div class="p-8 bg-pink-500 text-center text-white mangeelementer10">10</div>
+	</div>
+	<div class="h-screen">
+	</div>
+	</article>  
+	`} lang="html">
+	</Code>
+	<p>Dernæst skal der lidt javascript til. Her har jeg brugt inView funktionen til at checke at elementet er i viewporten. Dernæst bliver hver enkelt element animeret med animate()-funktionen. Jeg animerer hver enkelt element, så de kan forskydes uafhængigt af hinanden. Efter animate-funktionerne er der en retur/callback-funktion, som egentlig bare gentager animationerne. Så vil animationen virke hver gang elementet kommer ind i viewporten.: </p>
+	<Code code={`
+/* Mange elementer der animerer ind */
+	inView( ".mangeelementerinview", () =>{
+	animate( ".mangeelementer1", { x: [-2000, 0 ], y: [-50, 0 ] }, { duration: 1 }) 
+	animate( ".mangeelementer2", { x: [-1500, 0 ], y: [-100, 0 ] }, { duration: 3 })
+	animate( ".mangeelementer3", { x: [-1000, 0 ], y: [-150, 0 ] }, { duration: 3 })
+	animate( ".mangeelementer4", { x: [1750, 0 ] }, { duration: 2 })
+	animate( ".mangeelementer5", { x: [-2000, 0 ], y: [-100, 0 ]  }, { duration: 1 })
+	animate( ".mangeelementer6", { x: [2000, 0 ] }, { duration: 2 })
+	animate( ".mangeelementer7", { x: [1500, 0 ], y: [50, 0 ] }, { duration: 3 })
+	animate( ".mangeelementer8", { x: [1000, 0 ], y: [150, 0 ] }, { duration: 2 })
+	animate( ".mangeelementer9", { x: [1500, 0 ], y: [0, 0 ] }, { duration: 1 })
+	animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
+	return () => {
+		animate( ".mangeelementer1", { x: [-2000, 0 ], y: [-50, 0 ] }, { duration: 1 }) 
+		animate( ".mangeelementer2", { x: [-1500, 0 ], y: [-100, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer3", { x: [-1000, 0 ], y: [-150, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer4", { x: [1750, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer5", { x: [-2000, 0 ], y: [-100, 0 ]  }, { duration: 1 })
+		animate( ".mangeelementer6", { x: [2000, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer7", { x: [1500, 0 ], y: [50, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer8", { x: [1000, 0 ], y: [150, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer9", { x: [1500, 0 ], y: [0, 0 ] }, { duration: 1 })
+		animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
+   		}
+  	})
+	`} lang="ja">
+	</Code>
 	</section>
 
 
@@ -807,27 +858,27 @@ import baad3 from "../assets/images/baad3.png";
 
 	/* Mange elementer der animerer ind */
 	inView( ".mangeelementerinview", () =>{
-		animate( ".mangeelementer1", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 2 }) 
-		animate( ".mangeelementer2", { x: [-1500, 0 ], y:[-500, 0] }, { duration: 3 })
-		animate( ".mangeelementer3", { x: [-1000, 0 ] }, { duration: 3 })
-		animate( ".mangeelementer4", { x: [-500, 0 ], y:[-500, 0] }, { duration: 2 })
-		animate( ".mangeelementer5", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 3 })
-		animate( ".mangeelementer6", { x: [2000, 0 ], y:[-1000, 0] }, { duration: 3 })
-		animate( ".mangeelementer7", { x: [1500, 0 ]}, { duration: 2 })
-		animate( ".mangeelementer8", { x: [1000, 0 ]}, { duration: 3 })
-		animate( ".mangeelementer9", { x: [500, 0 ]}, { duration: 3 })
-		animate( ".mangeelementer10", { x: [2000, 0 ], y:[1000, 0] }, { duration: 2 })
-    return () => {
-		animate( ".mangeelementer1", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 2 }) 
-		animate( ".mangeelementer2", { x: [-1500, 0 ], y:[-500, 0] }, { duration: 3 })
-		animate( ".mangeelementer3", { x: [-1000, 0 ] }, { duration: 3 })
-		animate( ".mangeelementer4", { x: [-500, 0 ], y:[-500, 0] }, { duration: 2 })
-		animate( ".mangeelementer5", { x: [-2000, 0 ], y:[-1000, 0] }, { duration: 3 })
-		animate( ".mangeelementer6", { x: [2000, 0 ], y:[-1000, 0] }, { duration: 3 })
-		animate( ".mangeelementer7", { x: [1500, 0 ]}, { duration: 2 })
-		animate( ".mangeelementer8", { x: [1000, 0 ]}, { duration: 3 })
-		animate( ".mangeelementer9", { x: [500, 0 ]}, { duration: 3 })
-		animate( ".mangeelementer10", { x: [2000, 0 ], y:[1000, 0] }, { duration: 2 })
+		animate( ".mangeelementer1", { x: [-2000, 0 ], y: [-50, 0 ] }, { duration: 1 }) 
+		animate( ".mangeelementer2", { x: [-1500, 0 ], y: [-100, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer3", { x: [-1000, 0 ], y: [-150, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer4", { x: [1750, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer5", { x: [-2000, 0 ], y: [-100, 0 ]  }, { duration: 1 })
+		animate( ".mangeelementer6", { x: [2000, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer7", { x: [1500, 0 ], y: [50, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer8", { x: [1000, 0 ], y: [150, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer9", { x: [1500, 0 ], y: [0, 0 ] }, { duration: 1 })
+		animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
+		return () => {
+		animate( ".mangeelementer1", { x: [-2000, 0 ], y: [-50, 0 ] }, { duration: 1 }) 
+		animate( ".mangeelementer2", { x: [-1500, 0 ], y: [-100, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer3", { x: [-1000, 0 ], y: [-150, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer4", { x: [1750, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer5", { x: [-2000, 0 ], y: [-100, 0 ]  }, { duration: 1 })
+		animate( ".mangeelementer6", { x: [2000, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer7", { x: [1500, 0 ], y: [50, 0 ] }, { duration: 3 })
+		animate( ".mangeelementer8", { x: [1000, 0 ], y: [150, 0 ] }, { duration: 2 })
+		animate( ".mangeelementer9", { x: [1500, 0 ], y: [0, 0 ] }, { duration: 1 })
+		animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
     	}
   	})
 
