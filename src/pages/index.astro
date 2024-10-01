@@ -14,7 +14,7 @@ import baad3 from "../assets/images/baad3.png";
 ---
 <MainLayout title="Titel">
 	<!-- Intro/Indholdsfortegnelse mm. -->
-	<section class="prose pt-1">
+	<section class="pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Intro</h2>
 	<p>En masse små kodestumper med interaktioner og animationer klar til at blive copy-pastet og tilpasset.</p>
 	<p>Kodestumperne forudsætter at du bruger starteren <Link href="https://github.com/stefangrage/did-e24-starter.git" target="_blank">DiDe starter templaten</Link> med Astro, Tailwind, Alpine, Motion One mm..</p>
@@ -35,14 +35,15 @@ import baad3 from "../assets/images/baad3.png";
 			<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
 			<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
 			<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
-			<li><Link href="#mangesektioner" alt="">Sektion med mange elementer der animerer ind</Link></li>	
+			<li><Link href="#mangesektioner" alt="">Sektion med mange elementer der animerer ind</Link></li>
+			<li><Link href="#videoscrubber" alt="">Videoscrubber</Link></li>
 			<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
 		</div>
 	</ul>
 	</section>
 
 	<!-- Rolling/marquee banner -->
-	<section id="rollingbanner" class="prose pt-1">
+	<section id="rollingbanner" class="pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Rolling banner</h2>
 	<p>Hvem er ikke vild med et rolling banner (aka marquee banner)? Måske nogen af jer tænker <span class="italic">hvad er det</span>? Se toppen af sitet, lige under hero unit'en. Der har jeg lavet et:-)</p>
 	<p>Et rolling banner kan laves relativt nemt med lidt html, et par keyframe animationer og lidt css/tailwind. Først html'en: I dette eksempel er html'en placeret i Header.astro-filen, da den er en del af Hero unit'en. Men den kan placeres hvor du ønsker det:</p>
@@ -107,7 +108,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Lydeffekter -->
-	<section id="lydeffekter" class="prose pt-1" x-data>
+	<section id="lydeffekter" class="pt-1" x-data>
 	<h2 class="text-6xl font-extrabold font-black cursor cursor-handcursor" @mouseenter="$refs.wauwlyd.play()">Lydeffekter</h2>
 	<audio x-ref="wauwlyd">
 		<source src="wauw.mp3" type="audio/mpeg">
@@ -125,7 +126,7 @@ import baad3 from "../assets/images/baad3.png";
 	<h3 class="">Definer "scopet"</h3>
 	<p>Tilføj en x-data attribut for at definere “scopet” for lyden - du kan typisk bruge en section eller en component til at definere scopet for lyden. I dette eksempel, har jeg sat scopet til at være denne section:</p>
 	<Code code={`
-	<section id="lydeffekter" class="prose" x-data>
+	<section id="lydeffekter" class="" x-data>
 	`} lang="html">
 	</Code>
 	<h3 class="">Tilføj html audio element</h3>
@@ -167,7 +168,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Custom cursor -->
-	<section id="customcursor" class="prose pt-1">
+	<section id="customcursor" class="pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Custom Cursor</h2>
 	<p>Det er nemt og sjovt at tilføje sine egne cursors.</p>
 	<h3 class="">Lav grafikken</h3>
@@ -214,7 +215,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Afspil video på :hover -->
-	<section id="videoonhover" class="prose pt-1" x-data="{ videopopup: false }">
+	<section id="videoonhover" class="pt-1" x-data="{ videopopup: false }">
 		<h2 class="text-6xl font-extrabold font-black cursor cursor-handcursor">:hover video</h2>
 		<p>Internettet elsker videoer. Også små effektvideoer og GIF'er. GIF'er skal dog (typisk) ikke være GIF'er - brug små videoer i stedet. Men alt i alt: Der skal nogen på dit website!</p>
 		<p>Først og fremmest kan du lave små videoer, der afspiller når brugeren kører musen over dem (<span class="font-bold" @mouseenter="$refs.hovervideo.play()" @mouseleave="$refs.hovervideo.pause()">eller noget tekst?</span>), som i eksemplet nedenfor.</p>
@@ -280,7 +281,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Første Motion One stump -->
-	<section class="prose pt-1" id="foerstemotiononestump">
+	<section class="pt-1" id="foerstemotiononestump">
 	<h2 class="text-6xl font-extrabold font-black">Animation med Motion One</h2>
 	<p>For at bruge Motion One, skal du i bunden af din side/template/komponent importere Motion One biblioteket i et script tag:</p>
 	<Code code={`
@@ -298,7 +299,7 @@ import baad3 from "../assets/images/baad3.png";
 	</header>
 	
 	<div class="overflow-hidden">
-		<main class="container mx-auto p-8 prose prose-xl max-w-4xl">
+		<main class="container mx-auto p-8 max-w-4xl">
 			<slot />
 		</main>
 	</div>
@@ -311,7 +312,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Entrance animation -->
-	<section class="prose pt-1" id="entranceanimation">
+	<section class="pt-1" id="entranceanimation">
 	<h2 class="text-6xl font-extrabold font-black">Entrance animation</h2>
 	<p>Lad os starte med noget simpelt - at tilføje en entrance animation, der får hele websitet til at fade ind, når det loades - prøv at reloade siden for at se animationen.</p>
 	<p>Sådan en animation kan tilføjes i dit script-tag med ganske få kodestumper, lige efter det import statementet, der blev tilføjet i afsnittet "I gang med Motion One":</p>
@@ -328,7 +329,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Mere animate -->
-	<section class="prose pt-1" id="mereanimate">
+	<section class="pt-1" id="mereanimate">
 	<h2 class="text-6xl font-extrabold font-black origin-top-left mereanimate">Mere animate()</h2>
 	<p>Prøv at gøre animate() funktionen lidt mere kompleks, som eksempelvis i overskriften herover. Her er der flere parametre i keyframe animationen: Opacity, scale, rotate, x, y, delay, duration, direction mm.</p>
 	<Code code={`
@@ -352,7 +353,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>	
 
 	<!-- inView -->
-	<section class="prose pt-1" id="inview">
+	<section class="pt-1" id="inview">
 	<h2 class="text-6xl font-extrabold font-black">inView animation</h2>
 	<p>Indtil videre er animationerne bare blevet eksekveret når sitet er loadet. Men rigtig ofte vil vi gerne eksekvere animationerne, når brugeren ser det pågældende element i viewporten. Det kan vi gøre ved hjælp af inview()-funktionen. Fotoet herunder skubbes ind fra siden, når brugeren scroller ned til det</p>
 	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="fotoinview"></Image>
@@ -373,7 +374,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Stagger animation -->
-	<section class="prose pt-1" id="stagger">
+	<section class="pt-1" id="stagger">
 	<h2 class="text-6xl font-extrabold font-black">Stagger animation</h2>
 	<p>Stagger funktionen giver en række elementer den samme animation, men med et delay mellem hvert element. Se f.eks. listen nedenfor (reload evt. for at se animationen):</p>
 	<ul class="staggeranimation text-2xl">
@@ -413,7 +414,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Timeline animation -->
-	<section class="prose pt-1" id="timelineanimation">
+	<section class="pt-1" id="timelineanimation">
 	<h2 class="text-6xl font-extrabold font-black">Timeline animation</h2>
 	<p>Med en timeline kan flere animationer bindes sammen (chaines), så de eksekveres én efter én. Se animationerne på billedet nedenfor (reload eventuelt for at se animationen):</p>
 	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="opacity-0 timelineanimation" id="timelineanimationimage"></Image>
@@ -444,7 +445,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- InView & Return animation -->
-	<section class="prose pt-1" id="inviewandreturn">
+	<section class="pt-1" id="inviewandreturn">
 	<h2 class="text-6xl font-extrabold font-black">inView & Return animation</h2>
 	<p>Indtil videre er animationerne blevet eksekveret én gang. Hvis du gerne vil have dem til at starte (forfra) hver gang elementet vises i viewporten, kan du bruge inView()s return funktion. Se eksempelvis billedet herunder. Det er roteret 180 grader, når det kommer ind i viewporten, og bliver så roteret tilbage til 0 grader med animate()-funktionen. Scroller du væk, vender det tilbage til 180 grader, og næste gang det kommer ind i viewporten igen, roterer det til 0 grader igen."</p>
 	<Image src={dobbeltexp} alt="" type="image/webp" loading="lazy" class="inviewreturn"></Image>
@@ -471,7 +472,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Crossfade -->
-	<section class="prose pt-1 overflow-hidden" id="crossfade">
+	<section class="pt-1 overflow-hidden" id="crossfade">
 	<h2 class="text-6xl font-extrabold font-black">Crossfade on scroll</h2>
 	<p>Lad os se på hvordan man kan crossfade mellem to billeder baseret på hvor langt brugeren er scrollet i en container, som i eksemplet nedenfor:</p>
 	<section class="crossfadeimages mx-auto relative h-screen lg:w-screen">
@@ -505,7 +506,7 @@ import baad3 from "../assets/images/baad3.png";
 	</section>
 
 	<!-- Parallax med tekstboks -->
-	<section class="prose pt-1" id="parallaxmedtekstbox">
+	<section class="pt-1" id="parallaxmedtekstbox">
 	<h2 class="text-6xl font-extrabold font-black">Parallax med tekstboks</h2>
 	<p>Parallax-sektioner ses ofte anvendt på webdoks. Parallax-sektioner kan laves med Motion Ones scroll-funktion. Scroll-funktionen lytter på hvor langt man er scrollet ned i et givent element, og så kan man animere et andet element oven på dette for at lave parallax-effekten. Se sektionen nedenfor, hvor teksten bevæger sig hurtigere end baggrunden. </p>
 	<section class="parallaxcontainer bg-teal-100 mt-8 h-screen w-100 bg-cover bg-center" style="background-image: url('/hurtig.jpg');">
@@ -538,8 +539,8 @@ import baad3 from "../assets/images/baad3.png";
 
 	<!-- Parallaxgrafik -->
 	<section class="pt-1" id="parallaxgrafik">
-	<h2 class="prose text-6xl font-extrabold font-black">Parallaxgrafik</h2>
-	<p class="prose">Parallax-sektioner kan også nemt bruges til at lave en fin, lille grafisk kollage: 
+	<h2 class="text-6xl font-extrabold font-black">Parallaxgrafik</h2>
+	<p class="">Parallax-sektioner kan også nemt bruges til at lave en fin, lille grafisk kollage: 
 	<section class="parallaxgrafik fullwidthsection">	
 		<div class="bg-teal-100 mt-8 h-screen w-full bg-cover bg-center grid grid-cols-12 overflow-hidden" style="background-image: url('/havet.jpg');">
 			<Image src={baad1} alt="" class="col-start-2 parallaxgrafik1"></Image>
@@ -588,7 +589,7 @@ import baad3 from "../assets/images/baad3.png";
 
 	<!-- Sticky -->
 	<section class="pt-1" id="stickysektioner">
-	<h2 class="prose text-6xl font-extrabold font-black">Sticky</h2>
+	<h2 class="text-6xl font-extrabold font-black">Sticky</h2>
 	<p>"Sticky" sektioner ses også ofte anvendt i webfeatures - indimellem kombineret med parallax. Målet er at give brugerne lidt ro til at læse tekstbidderne. Sticky-sektioner kan laves nemt bare med Tailwind. Se de tre sektioner nedenfor, som "sticyk'er" teksten fast i toppen af skærmen. </p>
 	<article class="fullwidthsection">
 		<div class="flex items-center h-screen w-100 bg-cover bg-center" style="background-image: url('/astro.jpg')" >
@@ -640,8 +641,8 @@ import baad3 from "../assets/images/baad3.png";
 
 	<!-- Sektion med mange elementer, der animerer ind i viewporten -->
 	<section class="pt-1" id="mangesektioner">
-	<h2 class="prose text-6xl font-extrabold font-black">Sektion med mange elementer der animerer ind</h2>
-	<p>Hvordan man kan animere mange ting ind i skærmen på én gang, lidt ligesom på <Link href="https://www.dr.dk/nyheder/webfeature/facebookgrupper" target="_blank">DR's webfeature om Facebook</Link>?</p>
+	<h2 class="text-6xl font-extrabold font-black">Sektion med mange elementer der animerer ind</h2>
+	<p class="">Hvordan man kan animere mange ting ind i skærmen på én gang, lidt ligesom på <Link href="https://www.dr.dk/nyheder/webfeature/facebookgrupper" target="_blank">DR's webfeature om Facebook</Link>?</p>
 	<article class="">
 		<div class="sticky top-1/4 mangeelementerinview grid grid-cols-5">
 		  <div class="p-8 bg-green-700 text-center text-white mangeelementer1">1</div>
@@ -658,8 +659,8 @@ import baad3 from "../assets/images/baad3.png";
 		<div class="h-screen">
 		</div>
 	  </article>  
-	<h3>Teknikken bag</h3>
-	<p>I html'en: Først har jeg lavet en container/article det hele. Dernæst to &lt;div&gt;'er: Den første &lt;div&gt; består af et grid på 5 kolonner. Inde i det grid er der en masse &lt;div&gt;'er, med hver sin class (mangeelementer1...10). &lt;div&gt;en er position: sticky. &lt;div&gt; nr. 2 fungerer bare som fyldstof:</p>
+	<h3 class="">Teknikken bag</h3>
+	<p class="">I html'en: Først har jeg lavet en container/article det hele. Dernæst to &lt;div&gt;'er: Den første &lt;div&gt; består af et grid på 5 kolonner. Inde i det grid er der en masse &lt;div&gt;'er, med hver sin class (mangeelementer1...10). &lt;div&gt;en er position: sticky. &lt;div&gt; nr. 2 fungerer bare som fyldstof:</p>
 	<Code code={`
 	<article class="">
 	<div class="sticky top-1/4 mangeelementerinview grid grid-cols-5">
@@ -706,22 +707,67 @@ import baad3 from "../assets/images/baad3.png";
 		animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
    		}
   	})
-	`} lang="ja">
+	`} lang="js">
 	</Code>
 	</section>
 
-
-
 	<!-- Video scrubber -->
-	<section class="sticky">
-	<h2 class="prose text-6xl font-extrabold font-black">Video scrubber</h2>
-	<p>Video scrubbing går ud på at afspille en video alt efter hvor meget man er scrollet ned i et container-element. Det kombineres typisk med "position sticky." Videon skal helst være meget kompakt, ellers bliver det noget tungt for browseren at arbejde med. Se eksemplet nedenfor:</p>
-	<div class="videocontainer sticky top-1/4 w-full">video</div>
-	<div class="videoarticle h-screen"></div>
+	<section class="sticky pt-1" id="videoscrubber">
+	<h2 class="text-6xl font-extrabold font-black">Video scrubber</h2>
+	<p>Video scrubbing går ud på at afspille en video alt efter hvor meget man er scrollet ned i et container-element. Det kombineres typisk med "position sticky." Videoen skal helst være meget kompakt, ellers bliver det noget tungt for browseren at arbejde med. Og scroll-scrubbingen bliver heller ikke helt smooth i Firefox. Se eksemplet nedenfor:</p>
+	<div class="">
+		<div class="videocontainer sticky top-[20%] w-full h-full">
+			<video  muted loop playsinline class="w-full" id="videofil" >
+				<source src="/lumix1025.mp4" type="video/mp4">
+				<source src="/lumix1025.webm" type="video/webm">
+			</video>
+		</div>
+		<div class="h-screen videoscroller"></div>
+	</div>
+	<h3>Scroll-scrubbing - teknikken bag</h3>
+	<p>I html'en: Først og fremmest er der en "videocontainer", som er "sticky." Videocontaineren indeholder en videofil (html5 video). Efter video-div'en, er der en tom div, der fylder én skærmhøjde (h-screen). Den bruges til at justere scroll-længden for scroll-scrubberen. Det giver følgende html:</p>
+	<Code code={`
+	<div class="videocontainer sticky top-[20%] w-full h-full">
+	<video  muted loop playsinline class="w-full" id="videofil" >
+		<source src="/lumix1025.mp4" type="video/mp4">
+		<source src="/lumix1025.webm" type="video/webm">
+	</video>
+	</div>
+	<div class="h-screen videoscroller"></div>
+	`} lang="html">
+	</Code>
+	<p>Dernæst er der lidt js til at håndtere scroll-scrubbingen:</p>
+	<Code code={`
+	/* Scroll scrubber */
+	const scrubbervideo = document.querySelector("#videofil");
+	scrubbervideo.pause();	
+	scroll(
+		({ y }) => {
+		if (!scrubbervideo.readyState) return;
+		scrubbervideo.currentTime = scrubbervideo.duration * y.progress;
+		},
+		{
+		target: document.querySelector(".videoscroller"),
+		offset: ["start end", "end start"]
+		}
+	);
+	`} lang="js">
+	</Code>
+	<ul>
+		<li>Først oprettes en const med en reference til videofilen</li>
+		<li>Dernæst sættes afspilningen af videoen på pause (i html'en er den sat til at autplaye)</li>
+		<li>Motion Ones scroll(funktion) anvendes til: 
+			<ul>
+				<li>At checke hvor langt der er scrollet i target, og kører videoen frem/tilbage til en tilsvarende position i videoen.</li>
+				<li>target: siger hvilket element, der skal lyttes efter, om der bliver scrollet i</li>
+				<li>offset: er en beskrivelse af hvornår videoscrubberen skal starte og slutte. "start end" betyder at scrubberen skal starte "når starten af target elementet rammer bunden/slutnignen af containeren (skærmen)" og "end start" betyder at animationen skal væres slut, når bunden/slutningen af target elementet rammer toppen/starten af containeren (skærmen).</li>
+			</ul>
+		</li>
+	</ul>
 	</section>
 
 	<!-- Progress bar -->
-	<section id="progressbar" class="prose pt-1">
+	<section id="progressbar" class="pt-1">
 	<h2 class="text-6xl font-extrabold font-black">Progress-bar</h2>
 	<p>Læg mærke til toppen af sitet - der er en progress-bar/læseindikator, der viser hvor langt nede på siden brugeren er. Du kan lave en progress-bar ved hjælp af to stumper: En html-og-tailwind stump, der styrer udseendet, og en JS/Motion One stump, der styrer hvor meget af progress-baren, der vises.</p>
 	<p>Først og fremmest er progress-baren "designet" med Tailwind. Jeg har placeret den nederst i html'en, da den alligevel bare bliver positioneret "fixed" over alt andet indhold:</p>
@@ -881,6 +927,20 @@ import baad3 from "../assets/images/baad3.png";
 		animate( ".mangeelementer10", { x: [2000, 0 ] , y: [50, 0 ] }, { duration: 2 })
     	}
   	})
+
+	/* Scroll scrubber */
+	const scrubbervideo = document.querySelector("#videofil");
+	scrubbervideo.pause();	
+	scroll(
+		({ y }) => {
+		if (!scrubbervideo.readyState) return;
+		scrubbervideo.currentTime = scrubbervideo.duration * y.progress;
+		},
+		{
+		target: document.querySelector(".videoscroller"),
+		offset: ["start end", "end start"]
+		}
+	);
 
 	/* Progress-baren/læseindikatoren */
 	scroll( animate(".progress-bar", { scaleX: [0, 1] }));
