@@ -7,6 +7,7 @@ import { Image } from "astro:assets";
 import radio from "../assets/images/radio.jpg"
 import kodakelektralitesh from "../assets/images/kodak-elektralite-sh.jpg";
 import kodakelektralitefarver from "../assets/images/kodak-elektralite-farver.jpg";
+import doubleshot from "../assets/images/doubleshot.jpg";
 import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 import baad1 from "../assets/images/baad1.png";
 import baad2 from "../assets/images/baad2.png";
@@ -32,6 +33,7 @@ import baad3 from "../assets/images/baad3.png";
 			<li><Link href="#timelineanimation" alt="">Timeline animation</Link></li>	
 			<li><Link href="#inviewandreturn" alt="">inView & return animation</Link></li>		
 			<li><Link href="#crossfade" alt="">Crossfade on scroll</Link></li>
+			<li><Link href="#scrollogzoom" alt="">Scrollzoom</Link></li>
 			<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
 			<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
 			<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
@@ -505,6 +507,50 @@ import baad3 from "../assets/images/baad3.png";
 	<p>Script stumpen bruger Motion One scroll-funktionen til at checke hvor langt ned i elementet med "crossfadeimages" classen (den relative container), brugeren er scrollet. Animate-funktionen bruges til at ændre opacity fra 1 til 0 på det nederste billede. Offset bruges til at styre hvornår crossfadet skal starte/være færdiggjort. I dette tilfælde starter opacity-animationen 25vh FØR det relative element kommer ind på skærmen.</p>
 	</section>
 
+	<!-- Scrollzoom -->
+	<p></p>
+		<section class="pt-1" id="scrollogzoom">
+		<h2 class="text-6xl font-extrabold font-black">Scrollzoom (eller scroll og Zoom)</h2>
+		<p>I eksemplet nedenfor, scrolles først ned i et billede, og efter at billedet er scrollet et stykke ned, bliver der zoomet i det.</p>
+		<section class="scrollzoom overflow-clip">
+		<Image src={doubleshot} class="scrollzoomimg w-full" alt="">
+		</section> 
+		<p>Det kan gøres ret let med en scrool og animate funktion. Først html'en:</p>
+		<Code code={`
+	<section class="scrollzoom overflow-clip">
+	<Image src={doubleshot} class="scrollzoomimg w-full" alt="">
+	</section> 
+		`} lang="html">
+		</Code>
+		<p>Dernæst er der javascript-stumpen, som benytter scroll-funktionen:</p>
+	<Code code={`
+	scroll(
+    animate(".scrollzoomimg", { 
+        scale: [1, 1.5]    
+    }),
+    { 
+      target: document.querySelector(".scrollzoom"),
+      offset: ["0.75 end", "end end"]
+    }
+    )
+	`} lang="js">
+	</Code>
+	<ul>
+		<li>"target" refererer til det element, der lyttes efter om der scrolles i - dvs. min section med class'en scrollzoom. Og den er lige så høj som billedet.</li>
+		<li>Offset referer til hvornår animate-funktionen skal startes og være færdiggjort, f.eks. ["0.75 end", "end end"]. 
+			<ul>
+				<li>"0.75 end" betyder at animationen skal startes når "0.75 (dvs. 75%) af billedet rammer "end" af containeren (dvs. bundend af skærmen)". Du kan putte de talværdier ind du vil: Første tal referer til hvor langt nede i billedet, andet tal referer til hvor langt nede i containeren kontaktpunktet skal være (0 er toppen, 1 bunden)</li>
+				<li>"end end" betyder at animationen skal være færdig når "end af target/billedet rammer end af containeren (bunden af skærmen). Igen: Første tal referer til hvor langt nede i billedet, andet tal referer til hvor langt nede i containeren kontaktpunktet skal være (0 er toppen, 1 bunden)</li>
+			</ul> 
+		</li>
+	<p>Det kan fungerer fint at lave scrollzoom i fuld skærmbredde:</p>
+	</ul>
+		<section class="scrollzoomfullwidth overflow-clip fullwidthsection">
+		<Image src={doubleshot} class="scrollzoomimgfullwidth w-full" alt="">
+		</section> 
+	</section>
+	
+
 	<!-- Parallax med tekstboks -->
 	<section class="pt-1" id="parallaxmedtekstbox">
 	<h2 class="text-6xl font-extrabold font-black">Parallax med tekstboks</h2>
@@ -635,8 +681,6 @@ import baad3 from "../assets/images/baad3.png";
 	});
 	`} lang="js">
 	</Code>
-
-
 	</section>
 
 	<!-- Sektion med mange elementer, der animerer ind i viewporten -->
@@ -874,6 +918,26 @@ import baad3 from "../assets/images/baad3.png";
 			offset: ["-25vh", "25vh"]
 		}
 	);
+
+	/*Scrollzoom*/
+	scroll(
+        animate(".scrollzoomimg", { 
+          scale: [1, 1.5]    
+        }),
+        { 
+          target: document.querySelector(".scrollzoom"),
+          offset: ["0.75 end", "end end"]
+       }
+      )
+	scroll(
+        animate(".scrollzoomimgfullwidth", { 
+          scale: [1, 1.5]    
+        }),
+        { 
+          target: document.querySelector(".scrollzoomfullwidth"),
+          offset: ["0.70 end", "0.9 end"]
+       }
+    )
 
 	/* Parallax med tekstboks */ 
 	scroll(animate(".parallaxelement", { y: [50, 500] }), {
