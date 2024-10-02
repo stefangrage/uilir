@@ -12,6 +12,7 @@ import dobbeltexp from "../assets/images/dobbeltexp.jpeg";
 import baad1 from "../assets/images/baad1.png";
 import baad2 from "../assets/images/baad2.png";
 import baad3 from "../assets/images/baad3.png";
+import lomo from "../assets/images/lomo.jpeg";
 ---
 <MainLayout title="Titel">
 	<!-- Intro/Indholdsfortegnelse mm. -->
@@ -37,6 +38,7 @@ import baad3 from "../assets/images/baad3.png";
 			<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
 			<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
 			<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
+			<li><Link href="#horisontalscroll" alt="">Horisontal scroll</Link></li>
 			<li><Link href="#mangesektioner" alt="">Sektion med mange elementer der animerer ind</Link></li>
 			<li><Link href="#videoscrubber" alt="">Videoscrubber</Link></li>
 			<li><Link href="#progressbar" alt="">Progress-bar</Link></li>
@@ -683,6 +685,64 @@ import baad3 from "../assets/images/baad3.png";
 	</Code>
 	</section>
 
+	<!-- Horisontalt scrollende sektion -->
+	<section class="pt-1" id="horisontalscroll">
+	<h2 class="text-6xl font-extrabold font-black">Horisontal scroll</h2>
+	<p>For at bryde det vertikale flow (den uendelige scrollen nedad), kan det være sjovt at tilføje en horisontalt scrollende sektion, som reagerer på et op/nedadgående scroll. Se f.eks. <Link href="https://bananablossomsalads.com/" alt="" target="_blank">Banana Blossom Salads</Link>, der bruger det rigtig fint til at fremvise en menu. Eller eksemplet nedenfor:</p>
+	<div class="overflow-clip">
+		<section id="horisontalscrollsection" class="h-[500vh]">
+			<ul id="horisontalliste" class="list-none pl-0 flex sticky top-[10vh]">
+			<li class="pl-0 flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			</ul>
+		</section>
+	</div>
+	<h3>Teknikken bag horisontal scroll</h3>
+	<p>I eksemplet her er der en række forskellige ting, der skal arbejde sammen. Først og fremmest i html'en:</p>
+	<ul>
+		<li>Den horisontale sektion er lidt tricky. Først er der en section, inde i den section er der en unordered list, og listen består så - i dette tilfælde - af 5 list items.</li>
+		<li>Der kommer højre-scrollbars på sitet, fordi den horisontale sektion fylder for meget. Så jeg har pakket den horisontale sektion ind i en &lt;div&gt; med class'en overflow-clip:</li>		
+	</ul>
+	<Code code={`
+	<div class="overflow-clip">
+		<section id="horisontalscrollsection" class="h-[500vw]">
+			<ul id="horisontalliste" class="list-none pl-0 flex sticky top-[10vh]">
+			<li class="pl-0 flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			<li class="flex w-[100vw] items-start justify-center flex-col overflow-hidden flex-grow-0 flex-shrink-0 flex-auto"><figure class="flex flex-row max-w-[800px]"><Image src={lomo} class="w-2/3" alt="foto" /><figcaption class="pl-4 italic w-1/3">Dette fine, lille kamera er et Diana F, der skyder med 120-film.</figcaption></figure></li>
+			</ul>
+		</section>
+	</div>
+	`} lang="html">
+	</Code>	
+	<p>Et par vigtige ting ved html'en er:</p>
+	<ul>
+		<li>Min section er sat til at have en højde på 500 vw med tailwinds class til at tilføje custom højder: h-[500vw]. Så matcher højden af elementet med bredden af scroll-sektionen. Højden på elementet afgør scroll-hastigheden, da det er det "target," der lyttes efter hvor langt man er scrollet i. Jeg har valgt at have 5 elementer i min horisontale sektion, og bruger derfor en størrelse på h-[500vw] - havde jeg f.eks. 3 eller 7 elementer i min horisontale sektion, ville jeg gå efter en størrelse på hhv. h-[300vw] h-[700vw] for at få en passende scroll-hastighed. Kort sagt: Højden skal matche den horisontale sektions bredde. </li>
+		<li>Min ul'er er sat til sticky top-[10vh] - det kan tilpasses efter behov</li>
+		<li>Hver enkelt li-element er sat til en bredde på 100vvw ved hjælp af w-[100vw]. Deruodver er der en række flex-classes til justering af indholdet. Hvis du vil have sektionerne til at fylde mindre, kan du sætte en anden/fast bredde - så skal du bare opdatere højden, jvf. punktet ovenfor, og en lille stump JS (kommer senere).</li>
+	</ul>
+	<p>Og så er der javascript bidden:</p>
+	<Code code={`
+	/* Horisontal scroll sektion */
+	scroll(
+	animate("#horisontalliste", {
+		transform: ["none", "translateX(-500vw)"]
+	}),
+	{ target: document.querySelector("#horisontalscrollsection") }
+	); 
+	`} lang="js">
+	</Code>	
+	<ul>
+		<li>Transform med translateX er her sat til -500vw fordi der er 5 indholdselementer i listen. Har du f.eks. syv, sætter du den til -700vw, har du 3, sætter du den til -300vw mm. </li>
+		<li>Skal du have to eller flere horisontale scroll-sektioner, kan du bare kopiere kodestumpen, og ændre id'er på de efterfølgende horisontal scroll sektioner samt i JS-stumperne.</li>
+	</ul>
+	</section>
+
 	<!-- Sektion med mange elementer, der animerer ind i viewporten -->
 	<section class="pt-1" id="mangesektioner">
 	<h2 class="text-6xl font-extrabold font-black">Sektion med mange elementer der animerer ind</h2>
@@ -965,6 +1025,15 @@ import baad3 from "../assets/images/baad3.png";
 	scroll(animate(".stickyparallax3", { y: [-300, 0] }), {
 		target: document.querySelector(".stickyparallax3"),
 	});
+
+	/* Horisontal scroll sektion */
+	const items = document.querySelectorAll("#horisontalliste li");
+	scroll(
+	animate("#horisontalliste", {
+		transform: ["none", `translateX(-${items.length - 1}00vw)`]
+	}),
+	{ target: document.querySelector("#horisontalscrollsection") }
+	); 
 
 	/* Mange elementer der animerer ind */
 	inView( ".mangeelementerinview", () =>{
