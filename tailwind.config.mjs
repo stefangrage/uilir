@@ -5,7 +5,7 @@ export default {
 		extend: {
             cursor: {
                 // 'sjaeldencursor': 'url(cursor.svg) 25 25, pointer'
-                'handcursor': 'url(cursor.svg) 25 25, pointer',
+                'handcursor': 'url(/cursor.svg) 25 25, pointer',
             },
             animation: {
                 'infinite-scroll': 'infinite-scroll 25s linear infinite',
