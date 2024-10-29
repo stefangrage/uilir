@@ -38,6 +38,7 @@ import lomo from "../assets/images/lomo.jpeg";
 			<li><Link href="#parallaxmedtekstbox" alt="">Parallax med tekstboks</Link></li>
 			<li><Link href="#parallaxgrafik" alt="">Parallaxgrafik</Link></li>
 			<li><Link href="#stickysektioner" alt="">Sticky stuff</Link></li>
+            <li><Link href="#stickyscroll" alt="">Stickyscroll med infobokse</Link></li>
 			<li><Link href="#horisontalscroll" alt="">Horisontal scroll</Link></li>
 			<li><Link href="#mangesektioner" alt="">Sektion med mange elementer der animerer ind</Link></li>
 			<li><Link href="#videoscrubber" alt="">Videoscrubber</Link></li>
@@ -671,9 +672,9 @@ import lomo from "../assets/images/lomo.jpeg";
 	</article>
 	<p>Her er sticky class'en placeret på elementerne med billedbaggrunde på:</p>
 	<Code code={`
-		<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/astro.jpg')" >
-			<p class="w-3/4 lg:w-1/4 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax1">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
-		</div>
+	<div class="flex items-center h-screen w-100 bg-cover bg-center sticky top-0" style="background-image: url('/astro.jpg')" >
+		<p class="w-3/4 lg:w-1/4 lg:ml-64 p-10 bg-slate-50 text-xl stickyparallax1">Well, the way they make shows is, they make one show. That show's called a pilot.</p>
+	</div>
 	`} lang="html">
 	</Code>
 	<p>Parallax'en er lavet med en JS/Motion One kodestump efter samme fremgangsmåde som <Link href="#parallaxmedtekstbox">Parallax med tekstboks"</Link> dokumentationen:</p>
@@ -686,20 +687,103 @@ import lomo from "../assets/images/lomo.jpeg";
 	</section>
 
 	<!-- sticky-scroll - sticky med meget indhold -->
-
 	<section class="pt-1" id="stickyscroll">
-	<h2 class="text-6xl font-extrabold font-black">Stickyscroll med meget indhold</h2>
-	<article class="">
-		<div class="sticky top-0 left-0 right-0 bottom-0 h-screen w-100 bg-cover bg-center grid grid-cols-6 grid-rows-6 gap-4" style="background-image: url('/astro.jpg')" >
-		<p class="col-start-1 col-span-3 row-start-3 bg-slate-200">fixed content</p>
+	<h2 class="text-6xl font-extrabold font-black">Stickyscroll med infobokse</h2>
+	<p>Stickyscroll-sektioner med infobokse ses ofte på blandt andet DR's webfeatures. De er nemme at lave med Tailwind - helt uden alle de der besværlige Javascrip-stumper.</p>
+	<article>
+		<div class="sticky top-0 left-0 right-0 bottom-0 h-screen w-full bg-cover bg-center" style="background-image: url('/astro.jpg')" ></div>
+		<div class="relative flex justify-end">
+			<div class="flex flex-col w-full md:w-1/2 h-full justify-center gap-4 p-4 ">
+				<div class="bg-slate-100 ">
+					<p class="text-center">Scrollende indhold 1</p>
+				</div>
+				<div class="bg-slate-100">
+					<p class="text-center">Scrollende indhold 2</p>
+				</div>		
+			</div>
 		</div>
-		<div class="relative grid grid-cols-6 grid-rows-6 gap-4">
-			<p class="col-start-4 col-span-3 row-start-1 bg-slate-200">content bid 1</p>
-			<p class="col-start-4 col-span-3 row-start-3 bg-slate-500">content bid 2</p>
-			<p  class="col-start-4 col-span-3 row-start-5 bg-slate-600">content bid 3</p>
-		</div>
-		<div class="h-[100vh]" ></div>
+		<div class="h-[100vh]"></div>
 	</article>
+	<article>
+		<div class="sticky top-0 left-0 right-0 bottom-0 h-screen w-full bg-cover bg-center" style="background-image: url('/havet.jpg')" >
+			<div class="flex justify-start h-full">
+				<div class="flex flex-col w-full md:w-1/2  justify-center gap-4 p-4 ">
+					<div class="bg-slate-100">
+						<p class="text-center">Fast placeret indhold 1</p>
+					</div>
+					<div class="bg-slate-100">
+						<p class="text-center">Fast placeret indhold 2</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="relative flex justify-end">
+			<div class="flex flex-col w-full md:w-1/2 h-full justify-center gap-4 p-4 ">
+				<div class="bg-slate-100 ">
+					<p class="text-center">Scrollende indhold 1</p>
+				</div>
+				<div class="bg-slate-100">
+					<p class="text-center">Scrollende indhold 2</p>
+				</div>
+			</div>
+		</div>
+		<div class="h-[100vh]"></div>
+	</article>
+	<h3 class="">Teknikken bag</h3>
+	<p>Koden er realtivt simpel - det vigtige er at lave en container, som indeholder 3 elementer: </p>
+	<ul>
+		<li>Et "position: sticky" element, hvor der også er et baggrundsbillede på</li>
+		<li>Et "position: relative" element, der bruges til at indeholde alle de infobokse, der skal scrolle over baggrundsbilledet</li>
+		<li>Et element, der bruges som "afstandsstykke" - det er i dette 100vh højt - samme højde som baggrundsbilledet. Det gør at indholdet/infoboksene er scrollet helt væk, inden næste sticky element begynder at scrolle ind over baggrundsbilledet.</li>
+	</ul>
+	<Code code={`
+	<article><!-- containeren -->
+		<div class="sticky top-0 left-0 right-0 bottom-0 h-screen w-full bg-cover bg-center" style="background-image: url('/astro.jpg')" ></div><!-- sticky elementet -->
+		<div class="relative flex justify-end"><!-- relative elementet -->
+			<div class="flex flex-col w-full md:w-1/2 h-full justify-center gap-4 p-4 ">
+				<div class="bg-slate-100 ">
+					<p class="text-center">Scrollende indhold 1</p>
+				</div>
+				<div class="bg-slate-100">
+					<p class="text-center">Scrollende indhold 2</p>
+				</div>
+			</div>
+		</div>
+		<div class="h-[100vh]"></div><!-- afstandsstykket -->
+	</article>
+	`} lang="html">
+	</Code>
+	<p>I eksemplet bruges flexbox til at organisere indholdet, men det kan i princippet lige vel være CSS grid. I sektion 2 er der et par fast positionerede indholdssektioner - det er i bund og grund bare lidt ekstra indhold i sticky-sektionen:</p>
+	<Code code={`
+	<article>
+		<div class="sticky top-0 left-0 right-0 bottom-0 h-screen w-full bg-cover bg-center" style="background-image: url('/havet.jpg')" ><!-- sticky elementet med lidt ekstra indhold -->
+			<div class="flex justify-start h-full">
+				<div class="flex flex-col w-full md:w-1/2  justify-center gap-4 p-4 ">
+					<div class="bg-slate-100">
+						<p class="text-center">Fast placeret indhold 1</p>
+					</div>
+					<div class="bg-slate-100">
+						<p class="text-center">Fast placeret indhold 2</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="relative flex justify-end">
+			<div class="flex flex-col w-full md:w-1/2 h-full justify-center gap-4 p-4 ">
+				<div class="bg-slate-100 ">
+					<p class="text-center">Scrollende indhold 1</p>
+				</div>
+				<div class="bg-slate-100">
+					<p class="text-center">Scrollende indhold 2</p>
+				</div>
+			</div>
+		</div>
+		<div class="h-[100vh]"></div>
+	</article>
+	`} lang="html">
+	</Code>
+	
+	
 	</section>
 
 	<!-- Horisontalt scrollende sektion -->
